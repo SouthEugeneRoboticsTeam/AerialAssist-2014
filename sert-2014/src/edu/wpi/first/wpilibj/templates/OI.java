@@ -3,8 +3,8 @@ package edu.wpi.first.wpilibj.templates;
 
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.buttons.Button;
-import edu.wpi.first.wpilibj.buttons.DigitalIOButton;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
+import edu.wpi.first.wpilibj.templates.commands.ChangeDriveMode;
 
 /**
  * This class is the glue that binds the controls on the physical operator
@@ -46,7 +46,8 @@ public class OI {
     Joystick leftDriveStick;
     Joystick rightDriveStick;
     
-    Button changedrive;
+    Button leftChangeDriveMode;
+    Button rightChangeDriveMode;
             
     public static OI instance;
     
@@ -65,11 +66,14 @@ public class OI {
     }
     
     private void initButtons() {
+        leftChangeDriveMode = new JoystickButton(leftDriveStick, 1);
+        rightChangeDriveMode = new JoystickButton(rightDriveStick, 1);
         tieButtons();
     }
     
     private void tieButtons() {
-        
+        leftChangeDriveMode.whenPressed(new ChangeDriveMode());
+        rightChangeDriveMode.whenPressed(new ChangeDriveMode());
     }
     
     public Joystick getLeftDriveStick() {

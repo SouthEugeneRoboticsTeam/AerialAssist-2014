@@ -1,19 +1,25 @@
-
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
 package edu.wpi.first.wpilibj.templates.commands;
 
 /**
  *
- * @author bradmiller
+ * @author SERT
  */
-public class ExampleCommand extends CommandBase {
-
-    public ExampleCommand() {
+public class Pressurize extends CommandBase {
+    
+    public Pressurize() {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
+        requires(armSub);
     }
 
     // Called just before this Command runs the first time
     protected void initialize() {
+       armSub.startCompressor();
     }
 
     // Called repeatedly when this Command is scheduled to run

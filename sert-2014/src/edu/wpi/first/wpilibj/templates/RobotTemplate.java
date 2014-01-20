@@ -13,7 +13,6 @@ import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 import edu.wpi.first.wpilibj.templates.commands.CommandBase;
-import edu.wpi.first.wpilibj.templates.commands.ExampleCommand;
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -24,7 +23,6 @@ import edu.wpi.first.wpilibj.templates.commands.ExampleCommand;
  */
 public class RobotTemplate extends IterativeRobot {
 
-    Command autonomousCommand;
 
     /**
      * This function is run when the robot is first started up and should be
@@ -32,15 +30,17 @@ public class RobotTemplate extends IterativeRobot {
      */
     public void robotInit() {
         // instantiate the command used for the autonomous period
-        autonomousCommand = new ExampleCommand();
 
         // Initialize all subsystems
-        CommandBase.init();
+        try {
+            CommandBase.init();
+        } catch (Exception ex) {
+                ex.printStackTrace();
+        }
     }
 
     public void autonomousInit() {
         // schedule the autonomous command (example)
-        autonomousCommand.start();
     }
 
     /**
@@ -55,14 +55,17 @@ public class RobotTemplate extends IterativeRobot {
         // teleop starts running. If you want the autonomous to 
         // continue until interrupted by another command, remove
         // this line or comment it out.
-        autonomousCommand.cancel();
     }
 
     /**
      * This function is called periodically during operator control
      */
     public void teleopPeriodic() {
+        try {
         Scheduler.getInstance().run();
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
     }
     
     /**
