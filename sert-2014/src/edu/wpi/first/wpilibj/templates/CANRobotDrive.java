@@ -39,4 +39,8 @@ public class CANRobotDrive extends RobotDrive {
         m_frontLeftMotor.setX(codes);
         m_frontRightMotor.setX(codes);
     }
+    
+    public double getEncoders() throws CANTimeoutException {
+        return m_frontRightMotor.getPosition();
+    }
 }

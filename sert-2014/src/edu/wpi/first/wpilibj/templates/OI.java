@@ -5,6 +5,7 @@ import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.buttons.Button;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
 import edu.wpi.first.wpilibj.templates.commands.ChangeDriveMode;
+import edu.wpi.first.wpilibj.templates.commands.SlowDrive;
 
 /**
  * This class is the glue that binds the controls on the physical operator
@@ -48,6 +49,7 @@ public class OI {
     
     Button leftChangeDriveMode;
     Button rightChangeDriveMode;
+    Button slowMode;
             
     public static OI instance;
     
@@ -68,12 +70,14 @@ public class OI {
     private void initButtons() {
         leftChangeDriveMode = new JoystickButton(leftDriveStick, 1);
         rightChangeDriveMode = new JoystickButton(rightDriveStick, 1);
+        slowMode = new JoystickButton(leftDriveStick, 7);
         tieButtons();
     }
     
     private void tieButtons() {
         leftChangeDriveMode.whenPressed(new ChangeDriveMode());
         rightChangeDriveMode.whenPressed(new ChangeDriveMode());
+        slowMode.whenPressed(new SlowDrive());
     }
     
     public Joystick getLeftDriveStick() {
