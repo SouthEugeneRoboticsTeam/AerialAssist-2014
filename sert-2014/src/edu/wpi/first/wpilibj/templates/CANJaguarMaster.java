@@ -27,7 +27,7 @@ public class CANJaguarMaster extends CANJaguar {
         try {
             super.setX(outputValue);
             slave.setX(super.getOutputVoltage());
-        } catch (Exception ex) {
+        } catch (CANTimeoutException ex) {
             ex.printStackTrace();
         }
     }
@@ -36,7 +36,7 @@ public class CANJaguarMaster extends CANJaguar {
         try {
             super.setX(outputValue);
             slave.setX(super.getOutputVoltage());
-        } catch (Exception ex) {
+        } catch (CANTimeoutException ex) {
             ex.printStackTrace();
         }
     }
@@ -45,7 +45,7 @@ public class CANJaguarMaster extends CANJaguar {
         try {
             super.setX(outputValue, syncGroup);
             slave.setX(super.getOutputVoltage(), syncGroup);
-        } catch (Exception ex) {
+        } catch (CANTimeoutException ex) {
             ex.printStackTrace();
         }
     }
@@ -54,7 +54,7 @@ public class CANJaguarMaster extends CANJaguar {
         try {
             super.setX(outputValue, syncGroup);
             slave.setX(super.getOutputVoltage(), syncGroup);
-        } catch (Exception ex) {
+        } catch (CANTimeoutException ex) {
             ex.printStackTrace();
         }
     }
