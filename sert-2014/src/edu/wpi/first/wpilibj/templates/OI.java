@@ -5,6 +5,7 @@ import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.buttons.Button;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
 import edu.wpi.first.wpilibj.templates.commands.ChangeDriveMode;
+import edu.wpi.first.wpilibj.templates.commands.MoveToPosition;
 
 /**
  * This class is the glue that binds the controls on the physical operator
@@ -48,6 +49,8 @@ public class OI {
     
     Button leftChangeDriveMode;
     Button rightChangeDriveMode;
+    Button RotationForward;
+    Button RotationReverse;
             
     public static OI instance;
     
@@ -68,12 +71,16 @@ public class OI {
     private void initButtons() {
         leftChangeDriveMode = new JoystickButton(leftDriveStick, 1);
         rightChangeDriveMode = new JoystickButton(rightDriveStick, 1);
+        RotationForward = new JoystickButton(leftDriveStick, 8);
+        RotationReverse = new JoystickButton(leftDriveStick, 9);
         tieButtons();
     }
     
     private void tieButtons() {
         leftChangeDriveMode.whenPressed(new ChangeDriveMode());
         rightChangeDriveMode.whenPressed(new ChangeDriveMode());
+        RotationForward.whenPressed(new MoveToPosition(1));
+        RotationReverse.whenPressed(new MoveToPosition(-1));
     }
     
     public Joystick getLeftDriveStick() {

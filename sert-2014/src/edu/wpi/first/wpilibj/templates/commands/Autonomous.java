@@ -33,7 +33,7 @@ public class Autonomous extends CommandBase {
             driveSub.changeControlMode(CANJaguar.ControlMode.kPosition);
             first = false;
         }
-        driveSub.moveDistance(RobotMap.AUTONOMOUS_DISTANCE);
+        driveSub.moveToPosition(RobotMap.AUTONOMOUS_DISTANCE);
     }
 
     // Make this return true when this Command no longer needs to run execute()

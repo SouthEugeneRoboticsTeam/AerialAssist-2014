@@ -41,12 +41,29 @@ public class DriveSubsystem extends Subsystem {
         }
     }
     
-    public void moveDistance(double inches) {
+    public void moveToPosition(double position) {
         try {
-            drive.moveInches(inches);
+            drive.moveToPosition(position);
         } catch (CANTimeoutException ex) {
             ex.printStackTrace();
         }
+    }
+    
+    public void enableControl() {
+        try {
+            drive.enableControl();
+        } catch (CANTimeoutException ex) {
+            ex.printStackTrace();
+        }
+    }
+    
+    public double getPosition() {
+        try {
+            return drive.getPosition();
+        } catch (CANTimeoutException ex) {
+            ex.printStackTrace();
+        }
+        return 0;
     }
 
     public void changeTeleoperatedDriveMode() {

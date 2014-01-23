@@ -19,14 +19,18 @@ public class CANRobotDrive extends RobotDrive {
 
     CANJaguarMaster m_frontLeftMotor, m_frontRightMotor;
     
-    public CANRobotDrive(CANJaguarMaster m_frontLeftMotor, CANJaguarMaster m_frontRightMotor) throws CANTimeoutException {
-        super(m_frontLeftMotor, m_frontRightMotor);
-        this.m_frontLeftMotor = m_frontLeftMotor;
-        this.m_frontRightMotor = m_frontRightMotor;
-        this.m_frontLeftMotor.configEncoderCodesPerRev(360);
-        this.m_frontRightMotor.configEncoderCodesPerRev(360);
-        this.m_frontLeftMotor.setSpeedReference(CANJaguar.SpeedReference.kQuadEncoder);
-        this.m_frontRightMotor.setSpeedReference(CANJaguar.SpeedReference.kQuadEncoder);
+    public CANRobotDrive(CANJaguarMaster frontLeftMotor, CANJaguarMaster frontRightMotor) throws CANTimeoutException {
+        super(frontLeftMotor, frontRightMotor);
+        m_frontLeftMotor = frontLeftMotor;
+        m_frontRightMotor = frontRightMotor;
+        m_frontLeftMotor.configEncoderCodesPerRev(250);
+        m_frontRightMotor.configEncoderCodesPerRev(250);
+        m_frontLeftMotor.setSpeedReference(CANJaguar.SpeedReference.kQuadEncoder);
+        m_frontRightMotor.setSpeedReference(CANJaguar.SpeedReference.kQuadEncoder);
+        m_frontLeftMotor.setPositionReference(CANJaguar.PositionReference.kQuadEncoder);
+        m_frontRightMotor.setPositionReference(CANJaguar.PositionReference.kQuadEncoder);
+        m_frontLeftMotor.setPID(100, 0, 0);
+        m_frontRightMotor.setPID(100, 0, 0);
     }
     
     public void changeControlMode(CANJaguar.ControlMode mode) throws CANTimeoutException {
@@ -34,9 +38,18 @@ public class CANRobotDrive extends RobotDrive {
         m_frontRightMotor.changeControlMode(mode);
     }
     
-    public void moveInches(double distance) throws CANTimeoutException {
-        int codes = (int) (distance * 114.59155902616464175359630962821);
+    public void moveToPosition(double position) throws CANTimeoutException {
+        double codes = position;
         m_frontLeftMotor.setX(codes);
         m_frontRightMotor.setX(codes);
+    }
+    
+    public double getPosition() throws CANTimeoutException {
+        return m_frontRightMotor.getPosition();
+    }
+    
+    public void enableControl() throws CANTimeoutException {
+        m_frontLeftMotor.enableControl();
+        m_frontRightMotor.enableControl();
     }
 }
