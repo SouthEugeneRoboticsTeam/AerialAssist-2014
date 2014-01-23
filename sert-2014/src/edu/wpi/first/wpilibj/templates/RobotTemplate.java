@@ -61,11 +61,7 @@ public class RobotTemplate extends IterativeRobot {
      * This function is called periodically during operator control
      */
     public void teleopPeriodic() {
-        try {
         Scheduler.getInstance().run();
-        } catch (Exception ex) {
-            ex.printStackTrace();
-        }
     }
     
     /**

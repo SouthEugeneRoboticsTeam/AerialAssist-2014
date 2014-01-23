@@ -5,6 +5,7 @@ import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.buttons.Button;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
 import edu.wpi.first.wpilibj.templates.commands.ChangeDriveMode;
+import edu.wpi.first.wpilibj.templates.commands.MoveToPosition;
 import edu.wpi.first.wpilibj.templates.commands.SlowDrive;
 
 /**
@@ -49,6 +50,8 @@ public class OI {
     
     Button leftChangeDriveMode;
     Button rightChangeDriveMode;
+    Button rotationForward;
+    Button rotationReverse;
     Button slowMode;
             
     public static OI instance;
@@ -70,6 +73,8 @@ public class OI {
     private void initButtons() {
         leftChangeDriveMode = new JoystickButton(leftDriveStick, 1);
         rightChangeDriveMode = new JoystickButton(rightDriveStick, 1);
+        rotationForward = new JoystickButton(leftDriveStick, 8);
+        rotationReverse = new JoystickButton(leftDriveStick, 9);
         slowMode = new JoystickButton(leftDriveStick, 7);
         tieButtons();
     }
@@ -77,6 +82,8 @@ public class OI {
     private void tieButtons() {
         leftChangeDriveMode.whenPressed(new ChangeDriveMode());
         rightChangeDriveMode.whenPressed(new ChangeDriveMode());
+        rotationForward.whenPressed(new MoveToPosition(1000));
+        rotationReverse.whenPressed(new MoveToPosition(-.5));
         slowMode.whenPressed(new SlowDrive());
     }
     

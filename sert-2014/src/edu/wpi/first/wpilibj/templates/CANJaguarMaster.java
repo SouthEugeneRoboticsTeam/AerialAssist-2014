@@ -20,6 +20,7 @@ public class CANJaguarMaster extends CANJaguar {
     public CANJaguarMaster(int deviceNumber, CANJaguar slave) throws CANTimeoutException {
         super(deviceNumber);
         this.slave = slave;
+        slave.changeControlMode(ControlMode.kVoltage);
     }
     
     public void setX(double outputValue) {
