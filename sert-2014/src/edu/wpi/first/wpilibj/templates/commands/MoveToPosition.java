@@ -14,6 +14,7 @@ import edu.wpi.first.wpilibj.CANJaguar;
 public class MoveToPosition extends CommandBase {
     double position;
     boolean first = true;
+    boolean finish = false;
     
     public MoveToPosition(double position) {
         // Use requires() here to declare subsystem dependencies
@@ -33,25 +34,30 @@ public class MoveToPosition extends CommandBase {
             driveSub.enableControl();
             driveSub.moveToPosition(position);
             first = false;
-        } 
+            System.out.println(driveSub.getPosition());            
+        }
+        if (driveSub.getOutputVoltage() < 1) {
+            finish = true;
+        }
+        
     }
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-        return false;
+        return finish;
     }
 
     // Called once after isFinished returns true
     protected void end() {
-        //driveSub.disableControl();
-        //driveSub.changeControlMode(CANJaguar.ControlMode.kPercentVbus);
+        driveSub.disableControl();
+        driveSub.changeControlMode(CANJaguar.ControlMode.kPercentVbus);
         first = true;
-        System.out.println(driveSub.getPosition());
+        finish = false;
     }
 
     // Called when another command which requires one or more of the same
     // subsystems is scheduled to run
     protected void interrupted() {
-        end();
+        finish = true;
     }
 }

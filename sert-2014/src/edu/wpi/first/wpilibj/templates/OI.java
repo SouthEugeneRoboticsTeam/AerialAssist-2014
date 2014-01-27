@@ -83,7 +83,7 @@ public class OI {
         leftChangeDriveMode.whenPressed(new ChangeDriveMode());
         rightChangeDriveMode.whenPressed(new ChangeDriveMode());
         rotationForward.whenPressed(new MoveToPosition(1000));
-        rotationReverse.whenPressed(new MoveToPosition(-.5));
+        rotationReverse.whenPressed(new MoveToPosition(-1000));
         slowMode.whenPressed(new SlowDrive());
     }
     

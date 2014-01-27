@@ -15,18 +15,17 @@ import edu.wpi.first.wpilibj.can.CANTimeoutException;
  */
 public class CANJaguarMaster extends CANJaguar {
 
-    CANJaguar slave;
+    CANJaguar m_slave;
     
     public CANJaguarMaster(int deviceNumber, CANJaguar slave) throws CANTimeoutException {
         super(deviceNumber);
-        this.slave = slave;
-        slave.changeControlMode(ControlMode.kVoltage);
+        m_slave = slave;
     }
     
     public void setX(double outputValue) {
         try {
             super.setX(outputValue);
-            slave.setX(super.getOutputVoltage());
+            m_slave.setX(super.getOutputVoltage());
         } catch (CANTimeoutException ex) {
             ex.printStackTrace();
         }
@@ -35,7 +34,7 @@ public class CANJaguarMaster extends CANJaguar {
     public void set(double outputValue) {
         try {
             super.setX(outputValue);
-            slave.setX(super.getOutputVoltage());
+            m_slave.setX(super.getOutputVoltage());
         } catch (CANTimeoutException ex) {
             ex.printStackTrace();
         }
@@ -44,7 +43,7 @@ public class CANJaguarMaster extends CANJaguar {
         public void setX(double outputValue, byte syncGroup) {
         try {
             super.setX(outputValue, syncGroup);
-            slave.setX(super.getOutputVoltage(), syncGroup);
+            m_slave.setX(super.getOutputVoltage(), syncGroup);
         } catch (CANTimeoutException ex) {
             ex.printStackTrace();
         }
@@ -53,7 +52,7 @@ public class CANJaguarMaster extends CANJaguar {
     public void set(double outputValue, byte syncGroup) {
         try {
             super.setX(outputValue, syncGroup);
-            slave.setX(super.getOutputVoltage(), syncGroup);
+            m_slave.setX(super.getOutputVoltage(), syncGroup);
         } catch (CANTimeoutException ex) {
             ex.printStackTrace();
         }

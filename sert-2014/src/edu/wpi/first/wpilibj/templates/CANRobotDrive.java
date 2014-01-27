@@ -29,8 +29,8 @@ public class CANRobotDrive extends RobotDrive {
         m_frontRightMotor.configEncoderCodesPerRev(360);
         m_frontLeftMotor.setPositionReference(CANJaguar.PositionReference.kQuadEncoder);
         m_frontRightMotor.setPositionReference(CANJaguar.PositionReference.kQuadEncoder);
-        m_frontLeftMotor.setPID(50, 0, 0);
-        m_frontRightMotor.setPID(50, 0, 0);
+        m_frontLeftMotor.setPID(100, .1, 5);
+        m_frontRightMotor.setPID(100, .1, 5);
         m_frontLeftMotor.changeControlMode(CANJaguar.ControlMode.kPercentVbus);
         m_frontRightMotor.changeControlMode(CANJaguar.ControlMode.kPercentVbus);
     }
@@ -42,7 +42,7 @@ public class CANRobotDrive extends RobotDrive {
     
     public void moveToPosition(double position) throws CANTimeoutException {
         m_frontLeftMotor.setX(position);
-        m_frontRightMotor.setX(position);
+        m_frontRightMotor.setX(-position);
     }
     
     public double getPosition() throws CANTimeoutException {
@@ -57,5 +57,9 @@ public class CANRobotDrive extends RobotDrive {
     public void disableControl() throws CANTimeoutException {
         m_frontLeftMotor.disableControl();
         m_frontRightMotor.disableControl();
+    }
+    
+    public double getOutputVoltage() throws CANTimeoutException {
+        return (m_frontLeftMotor.getOutputVoltage() + m_frontRightMotor.getOutputVoltage())/2;
     }
 }

@@ -2,16 +2,12 @@
 package edu.wpi.first.wpilibj.templates.subsystems;
 
 import edu.wpi.first.wpilibj.CANJaguar;
-import edu.wpi.first.wpilibj.DriverStation;
-import edu.wpi.first.wpilibj.DriverStationEnhancedIO;
-import edu.wpi.first.wpilibj.DriverStationLCD;
 import edu.wpi.first.wpilibj.can.CANTimeoutException;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.templates.CANJaguarMaster;
 import edu.wpi.first.wpilibj.templates.CANRobotDrive;
 import edu.wpi.first.wpilibj.templates.OI;
 import edu.wpi.first.wpilibj.templates.RobotMap;
-import edu.wpi.first.wpilibj.templates.commands.SlowDrive;
 import edu.wpi.first.wpilibj.templates.commands.TeleoperatedDrive;
 
 /**
@@ -25,7 +21,7 @@ public class DriveSubsystem extends Subsystem {
     
     public DriveSubsystem() {
         try{
-           drive = new CANRobotDrive(new CANJaguarMaster(RobotMap.LEFT_FRONT_DRIVE_JAG, new CANJaguar(RobotMap.LEFT_REAR_DRIVE_JAG)), new CANJaguarMaster(RobotMap.RIGHT_FRONT_DRIVE_JAG, new CANJaguar(RobotMap.RIGHT_REAR_JAG_DRIVE)));
+           drive = new CANRobotDrive(new CANJaguarMaster(RobotMap.LEFT_FRONT_DRIVE_JAG, new CANJaguar(RobotMap.LEFT_REAR_DRIVE_JAG, CANJaguar.ControlMode.kVoltage)), new CANJaguarMaster(RobotMap.RIGHT_FRONT_DRIVE_JAG, new CANJaguar(RobotMap.RIGHT_REAR_JAG_DRIVE, CANJaguar.ControlMode.kVoltage)));
         } catch (CANTimeoutException ex) {
              ex.printStackTrace();
         }
@@ -85,6 +81,15 @@ public class DriveSubsystem extends Subsystem {
     public void changeTeleoperatedDriveMode() {
         isArcade = !isArcade;
     }
+    
+    public double getOutputVoltage() {
+        try {
+            return drive.getOutputVoltage();
+        } catch (CANTimeoutException ex) {
+            ex.printStackTrace();
+        }
+        return 0;
+    }
    
     private void arcade(){
         if (slowMode) {
@@ -107,7 +112,7 @@ public class DriveSubsystem extends Subsystem {
     }
     
     public void initDefaultCommand() {
-       // setDefaultCommand(new TeleoperatedDrive());
+       setDefaultCommand(new TeleoperatedDrive());
     }
 
 }

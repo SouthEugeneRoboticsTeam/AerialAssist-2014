@@ -20,7 +20,7 @@ public class RobotMap {
     public static final int LEFT_DRIVE_STICK_PORT = 1;
     public static final int RIGHT_DRIVE_STICK_PORT = 2;
     public static final int LEFT_FRONT_DRIVE_JAG = 31;
-    public static final int LEFT_REAR_DRIVE_JAG = 20;
+    public static final int LEFT_REAR_DRIVE_JAG = 12;
     public static final int RIGHT_FRONT_DRIVE_JAG = 10;
     public static final int RIGHT_REAR_JAG_DRIVE = 32;
     public static final int SOLENOID_RAISE_CHANNEL = 1;
