@@ -61,6 +61,14 @@ public class DriveSubsystem extends Subsystem {
         }
     }
     
+    public void enableControl(double position) {
+        try {
+            drive.enableControl(position);
+        } catch (CANTimeoutException ex) {
+            ex.printStackTrace();
+        }
+    }
+    
     public void disableControl() {
         try {
             drive.disableControl();
