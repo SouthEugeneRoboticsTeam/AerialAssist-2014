@@ -14,10 +14,10 @@ import edu.wpi.first.wpilibj.CANJaguar;
 public class MoveToPosition extends CommandBase {
     double position;
     boolean first = true;
+    double[] voltAverage = {1,1,1,1,1,1,1,1,1,1};
+    int index = 0;
     
     public MoveToPosition(double position) {
-        // Use requires() here to declare subsystem dependencies
-        // eg. requires(chassis);
         requires(driveSub);
         this.position = position;
     }
@@ -31,18 +31,14 @@ public class MoveToPosition extends CommandBase {
         if (first) {
             driveSub.changeControlMode(CANJaguar.ControlMode.kPosition);
             driveSub.enableControl();
-            first = false;          
+            first = false;
         } 
         driveSub.moveToPosition(position);
     }
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-        if (driveSub.getOutputVoltage() < .5) {
-            return true;
-        } else {
-            return false;
-        }
+        return (Math.abs(driveSub.getPosition() - position)) < .1;
     }
 
     // Called once after isFinished returns true

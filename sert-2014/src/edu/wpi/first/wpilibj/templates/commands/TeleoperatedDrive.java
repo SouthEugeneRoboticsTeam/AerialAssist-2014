@@ -22,7 +22,7 @@ public class TeleoperatedDrive extends CommandBase {
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
         driveSub.teleoperatedDrive();
-        System.out.println(driveSub.getPosition());
+        //System.out.println(driveSub.getPosition());
     }
 
     // Make this return true when this Command no longer needs to run execute()
