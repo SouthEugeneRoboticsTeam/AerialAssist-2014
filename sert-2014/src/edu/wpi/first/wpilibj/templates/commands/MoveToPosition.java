@@ -14,8 +14,6 @@ import edu.wpi.first.wpilibj.CANJaguar;
 public class MoveToPosition extends CommandBase {
     double position;
     boolean first = true;
-    double[] voltAverage = {1,1,1,1,1,1,1,1,1,1};
-    int index = 0;
     
     public MoveToPosition(double position) {
         requires(driveSub);
@@ -38,7 +36,7 @@ public class MoveToPosition extends CommandBase {
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-        return (Math.abs(driveSub.getPosition() - position)) < .1;
+        return (Math.abs(driveSub.getPosition() - position)) < .05;
     }
 
     // Called once after isFinished returns true
