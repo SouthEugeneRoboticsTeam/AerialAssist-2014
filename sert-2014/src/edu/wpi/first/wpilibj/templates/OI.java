@@ -82,8 +82,8 @@ public class OI {
     private void tieButtons() {
         leftChangeDriveMode.whenPressed(new ChangeDriveMode());
         rightChangeDriveMode.whenPressed(new ChangeDriveMode());
-        rotationForward.whenPressed(new MoveToPosition(10));
-        rotationReverse.whenPressed(new MoveToPosition(-1));
+        rotationForward.whenPressed(new MoveToPosition(14.4));
+        rotationReverse.whenPressed(new MoveToPosition(-14.4));
         slowMode.whenPressed(new SlowDrive());
     }
     

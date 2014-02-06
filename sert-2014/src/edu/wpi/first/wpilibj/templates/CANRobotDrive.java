@@ -29,8 +29,8 @@ public class CANRobotDrive extends RobotDrive {
         m_frontRightMotor.configEncoderCodesPerRev(360);
         m_frontLeftMotor.setPositionReference(CANJaguar.PositionReference.kQuadEncoder);
         m_frontRightMotor.setPositionReference(CANJaguar.PositionReference.kQuadEncoder);
-        m_frontLeftMotor.setPID(55, .005, .002);
-        m_frontRightMotor.setPID(55, .005, .002);
+        m_frontLeftMotor.setPID(RobotMap.K_P, RobotMap.K_I, RobotMap.K_D);
+        m_frontRightMotor.setPID(RobotMap.K_P, RobotMap.K_I, RobotMap.K_D);
         m_frontLeftMotor.changeControlMode(CANJaguar.ControlMode.kPercentVbus);
         m_frontRightMotor.changeControlMode(CANJaguar.ControlMode.kPercentVbus);
     }
