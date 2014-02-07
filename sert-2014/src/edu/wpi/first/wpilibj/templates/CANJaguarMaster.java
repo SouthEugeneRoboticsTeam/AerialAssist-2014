@@ -11,7 +11,9 @@ import edu.wpi.first.wpilibj.can.CANTimeoutException;
 
 /**
  *
- * @author FIRST
+ * @author Aubrey Anderson
+ * 
+ * Extends CANJaguar such that one CANJagaurMaster object can control 2 physical Jaguars
  */
 public class CANJaguarMaster extends CANJaguar {
 
@@ -21,6 +23,9 @@ public class CANJaguarMaster extends CANJaguar {
         super(deviceNumber);
         m_slave = slave;
     }
+    
+    //The following methods set the master to the given value
+    //The slave copies by fetching the output voltage from the faster and setting that as its output
     
     public void setX(double outputValue) {
         try {

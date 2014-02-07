@@ -5,38 +5,51 @@
  */
 package edu.wpi.first.wpilibj.templates.commands;
 
+import edu.wpi.first.wpilibj.CANJaguar;
+
 /**
  *
- * @author SERT
+ * @author Aubrey
  */
-public class Pressurize extends CommandBase {
+public class MoveToDistance extends CommandBase {
+    double position;
+    boolean first = true;
     
-    public Pressurize() {
-        // Use requires() here to declare subsystem dependencies
-        // eg. requires(chassis);
-        requires(compressor);
+    //moves to the given distance in inches
+    public MoveToDistance(double distance) {
+        requires(driveSub);
+        this.position = distance /(4 * Math.PI);
     }
 
     // Called just before this Command runs the first time
     protected void initialize() {
-       compressor.startCompressor();
     }
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
+        if (first) {
+            driveSub.changeControlMode(CANJaguar.ControlMode.kPosition);
+            driveSub.enableControl();
+            first = false;
+        } 
+        driveSub.moveToPosition(position);
     }
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-        return false;
+        return (Math.abs(driveSub.getPosition() - position)) < .05;
     }
 
     // Called once after isFinished returns true
     protected void end() {
+        driveSub.disableControl();
+        driveSub.changeControlMode(CANJaguar.ControlMode.kPercentVbus);
+        first = true;
     }
 
     // Called when another command which requires one or more of the same
     // subsystems is scheduled to run
     protected void interrupted() {
+        end();
     }
 }

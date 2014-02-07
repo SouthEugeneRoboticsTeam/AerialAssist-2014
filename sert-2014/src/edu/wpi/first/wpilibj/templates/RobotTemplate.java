@@ -8,6 +8,7 @@
 package edu.wpi.first.wpilibj.templates;
 
 
+import edu.wpi.first.wpilibj.DriverStationLCD;
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
@@ -32,14 +33,16 @@ public class RobotTemplate extends IterativeRobot {
      * used for any initialization code.
      */
     public void robotInit() {
-        // instantiate the command used for the autonomous period
-        //table = NetworkTable.getTable(FILE_NAME)
+        
+        table = NetworkTable.getTable("SmartDashboard");
+        
         // Initialize all subsystems
             CommandBase.init();
     }
 
     public void autonomousInit() {
         // schedule the autonomous command (example)
+        
     }
 
     /**
@@ -61,6 +64,8 @@ public class RobotTemplate extends IterativeRobot {
      */
     public void teleopPeriodic() {
         Scheduler.getInstance().run();
+        DriverStationLCD.getInstance().println(DriverStationLCD.Line.kUser3, 1, String.valueOf(table.getNumber("BLOB_COUNT")));
+        DriverStationLCD.getInstance().updateLCD();
     }
     
     /**

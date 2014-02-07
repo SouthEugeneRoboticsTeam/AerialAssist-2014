@@ -6,18 +6,18 @@
 package edu.wpi.first.wpilibj.templates.commands;
 
 import edu.wpi.first.wpilibj.CANJaguar;
-
 /**
  *
  * @author Aubrey
  */
-public class MoveToPosition extends CommandBase {
+public class MoveToGoal extends CommandBase {
     double position;
     boolean first = true;
     
-    public MoveToPosition(double position) {
+    public MoveToGoal() {
+        requires(sensors);
         requires(driveSub);
-        this.position = position;
+        this.position = sensors.getDistance() /(4 * Math.PI);
     }
 
     // Called just before this Command runs the first time

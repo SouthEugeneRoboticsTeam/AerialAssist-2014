@@ -11,13 +11,13 @@ import edu.wpi.first.wpilibj.Timer;
  *
  * @author SERT
  */
-public class ChangeArmPosition extends CommandBase {
+public class ChangeKickerPosition extends CommandBase {
     
 
-    public ChangeArmPosition() {
+    public ChangeKickerPosition() {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
-        requires(armSub);
+        requires(intakeSub);
         
     }
 
@@ -38,12 +38,12 @@ public class ChangeArmPosition extends CommandBase {
     // Called once after isFinished returns true
     protected void end() {
         if (armSub.isUp()) {
-            armSub.lowerArm();
+            armSub.lowerKicker();
         } else {
-            armSub.raiseArm();          
+            armSub.raiseKicker();          
         }
         Timer.delay(.01);               //minimum time for Solenoid to switch positions
-        armSub.resetArmSolenoid();      //sets solenoid to off to prevent burning it out
+        armSub.resetKickerSolenoid();      //sets solenoid to off to prevent burning it out
     }
     
     protected void interrupted() {

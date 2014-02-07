@@ -5,7 +5,9 @@ import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.buttons.Button;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
 import edu.wpi.first.wpilibj.templates.commands.ChangeDriveMode;
-import edu.wpi.first.wpilibj.templates.commands.MoveToPosition;
+import edu.wpi.first.wpilibj.templates.commands.ChangeIntakePosition;
+import edu.wpi.first.wpilibj.templates.commands.ChangeKickerPosition;
+import edu.wpi.first.wpilibj.templates.commands.MoveToDistance;
 import edu.wpi.first.wpilibj.templates.commands.SlowDrive;
 
 /**
@@ -53,6 +55,8 @@ public class OI {
     Button rotationForward;
     Button rotationReverse;
     Button slowMode;
+    Button changeIntakePostion;
+    Button changeKickerPosition;
             
     public static OI instance;
     
@@ -76,15 +80,21 @@ public class OI {
         rotationForward = new JoystickButton(leftDriveStick, 8);
         rotationReverse = new JoystickButton(leftDriveStick, 9);
         slowMode = new JoystickButton(leftDriveStick, 7);
+        changeIntakePostion = new JoystickButton(leftDriveStick, 2);
+        changeKickerPosition = new JoystickButton(leftDriveStick, 3);
+        
         tieButtons();
     }
     
     private void tieButtons() {
         leftChangeDriveMode.whenPressed(new ChangeDriveMode());
         rightChangeDriveMode.whenPressed(new ChangeDriveMode());
-        rotationForward.whenPressed(new MoveToPosition(10));
-        rotationReverse.whenPressed(new MoveToPosition(-1));
+        //Change amount each button drives
+        rotationForward.whenPressed(new MoveToDistance(120));
+        rotationReverse.whenPressed(new MoveToDistance(-12));
         slowMode.whenPressed(new SlowDrive());
+        changeIntakePostion.whenPressed(new ChangeIntakePosition());
+        changeKickerPosition.whenPressed(new ChangeKickerPosition());
     }
     
     public Joystick getLeftDriveStick() {
