@@ -25,17 +25,17 @@ public class KickerSubsystem extends Subsystem {
         return isUp;
     }
     
-    public void raiseArm() {
+    public void raiseKicker() {
         kicker.set(DoubleSolenoid.Value.kForward);
         isUp = true;
     }
     
-    public void lowerArm() {
+    public void lowerKicker() {
         kicker.set(DoubleSolenoid.Value.kReverse);
         isUp = false;
     }
     
-    public void resetArmSolenoid() {
+    public void resetKickerSolenoid() {
         kicker.set(DoubleSolenoid.Value.kOff);
     }
 

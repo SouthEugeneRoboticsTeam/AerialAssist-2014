@@ -17,7 +17,7 @@ public class ChangeKickerPosition extends CommandBase {
     public ChangeKickerPosition() {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
-        requires(intakeSub);
+        requires(kickerSub);
         
     }
 
@@ -37,13 +37,13 @@ public class ChangeKickerPosition extends CommandBase {
 
     // Called once after isFinished returns true
     protected void end() {
-        if (armSub.isUp()) {
-            armSub.lowerKicker();
+        if (kickerSub.isUp()) {
+            kickerSub.lowerKicker();
         } else {
-            armSub.raiseKicker();          
+            kickerSub.raiseKicker();
         }
         Timer.delay(.01);               //minimum time for Solenoid to switch positions
-        armSub.resetKickerSolenoid();      //sets solenoid to off to prevent burning it out
+        kickerSub.resetKickerSolenoid();      //sets solenoid to off to prevent burning it out
     }
     
     protected void interrupted() {

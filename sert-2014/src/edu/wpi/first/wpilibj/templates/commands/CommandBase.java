@@ -33,7 +33,6 @@ public abstract class CommandBase extends Command {
         // which commands extend), subsystems are not guaranteed to be
         // yet. Thus, their requires() statements may grab null pointers. Bad
         // news. Don't move it.
-        armSub = new IntakeSubsystem();
         driveSub = new DriveSubsystem();
         compressor = new CompressorSubsystem();
         sensors = new SensorSubsystem();

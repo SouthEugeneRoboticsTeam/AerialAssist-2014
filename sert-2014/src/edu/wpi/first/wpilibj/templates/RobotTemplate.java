@@ -15,6 +15,7 @@ import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 import edu.wpi.first.wpilibj.networktables.NetworkTable;
 import edu.wpi.first.wpilibj.networktables2.client.NetworkTableClient;
+import edu.wpi.first.wpilibj.tables.TableKeyNotDefinedException;
 import edu.wpi.first.wpilibj.templates.commands.CommandBase;
 
 /**
@@ -34,7 +35,7 @@ public class RobotTemplate extends IterativeRobot {
      */
     public void robotInit() {
         
-        table = NetworkTable.getTable("SmartDashboard");
+//        table = NetworkTable.getTable("SmartDashboard");
         
         // Initialize all subsystems
             CommandBase.init();
@@ -64,8 +65,12 @@ public class RobotTemplate extends IterativeRobot {
      */
     public void teleopPeriodic() {
         Scheduler.getInstance().run();
-        DriverStationLCD.getInstance().println(DriverStationLCD.Line.kUser3, 1, String.valueOf(table.getNumber("BLOB_COUNT")));
-        DriverStationLCD.getInstance().updateLCD();
+//        try {
+//            DriverStationLCD.getInstance().println(DriverStationLCD.Line.kUser3, 1, String.valueOf(table.getNumber("BLOB_COUNT", 1)));
+//        } catch (TableKeyNotDefinedException ex) {
+//            
+//        }
+//        DriverStationLCD.getInstance().updateLCD();
     }
     
     /**

@@ -38,12 +38,12 @@ public class ChangeIntakePosition extends CommandBase {
     // Called once after isFinished returns true
     protected void end() {
         if (armSub.isUp()) {
-            armSub.lowerKicker();
+            armSub.lowerArm();
         } else {
-            armSub.raiseKicker();          
+            armSub.raiseArm();          
         }
         Timer.delay(.01);               //minimum time for Solenoid to switch positions
-        armSub.resetKickerSolenoid();      //sets solenoid to off to prevent burning it out
+        armSub.resetArmSolenoid();      //sets solenoid to off to prevent burning it out
     }
     
     protected void interrupted() {

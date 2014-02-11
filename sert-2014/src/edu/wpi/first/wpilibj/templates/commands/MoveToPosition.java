@@ -5,50 +5,52 @@
  */
 package edu.wpi.first.wpilibj.templates.commands;
 
+import edu.wpi.first.wpilibj.CANJaguar;
+
 /**
  *
- * @author SERT
+ * @author Aubrey
  */
-public class Pressurize extends CommandBase {
+public class MoveToPosition extends CommandBase {
+    double position;
+    boolean first = true;
     
-    int compressorChannel;
-    
-    public Pressurize(int compressorChannel) {
-        // Use requires() here to declare subsystem dependencies
-        // eg. requires(chassis);
-        requires(compressor);
-        this.compressorChannel = compressorChannel;
+    //moves to the given distance in inches
+    public MoveToPosition(double position) {
+        requires(driveSub);
+        this.position = position;
     }
 
     // Called just before this Command runs the first time
     protected void initialize() {
-       
     }
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-        switch (compressorChannel) {
-            case 1:
-                compressor.startOnboardCompressor();
-                break;
-            case 2:
-                compressor.startOffboardCompressor();
-                break;
-        }
+        if (first) {
+            driveSub.changeControlMode(CANJaguar.ControlMode.kPosition);
+            driveSub.enableControl();
+            first = false;
+        } 
+        System.out.println(position);
+        driveSub.moveToPosition(position);
     }
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-        return false;
+        return (Math.abs(driveSub.getPosition() - position)) < .1;
     }
 
     // Called once after isFinished returns true
     protected void end() {
-        compressor.stopOffboardCompressor();
+        driveSub.disableControl();
+        driveSub.changeControlMode(CANJaguar.ControlMode.kPercentVbus);
+        first = true;
     }
 
     // Called when another command which requires one or more of the same
     // subsystems is scheduled to run
     protected void interrupted() {
+        end();
     }
 }

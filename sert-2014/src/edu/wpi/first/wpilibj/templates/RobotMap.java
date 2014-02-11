@@ -28,8 +28,10 @@ public class RobotMap {
     public static final int INTAKE_LOWER_CHANNEL = 2;
     public static final int KICKER_RAISE_CHANNEL = 3;
     public static final int KICKER_LOWER_CHANNEL = 4;
-    public static final int COMPRESSOR_CHANNEL = 1;
-    public static final int PRESSURE_SWITCH_CHANNEL = 1;
+    public static final int ONBOARD_COMPRESSOR_CHANNEL = 1;
+    public static final int OFFBOARD_COMPRESSOR_CHANNEL = 2;
+    public static final int PRESSURE_SWITCH_CHANNEL_1 = 1;
+    public static final int PRESSURE_SWITCH_CHANNEL_2 = 2;
     public static final double AUTONOMOUS_DISTANCE = 187;
     public static final double K_P = 55;
     public static final double K_I = .001;
