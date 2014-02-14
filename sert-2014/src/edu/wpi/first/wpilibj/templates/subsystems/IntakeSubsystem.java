@@ -22,11 +22,11 @@ public class IntakeSubsystem extends Subsystem {
     private boolean isUp = true;
         
     public IntakeSubsystem() {
-//        try {
-//            intake = new CANJaguar(RobotMap.INTAKE_JAG);
-//        } catch (CANTimeoutException ex) {
-//            ex.printStackTrace();
-//        }
+        try {
+            intake = new CANJaguar(RobotMap.INTAKE_JAG);
+        } catch (CANTimeoutException ex) {
+            ex.printStackTrace();
+        }
         arm = new DoubleSolenoid(RobotMap.INTAKE_RAISE_CHANNEL, RobotMap.INTAKE_LOWER_CHANNEL);
     }
     

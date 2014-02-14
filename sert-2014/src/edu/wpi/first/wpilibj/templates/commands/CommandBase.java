@@ -20,7 +20,6 @@ public abstract class CommandBase extends Command {
 
     public static OI oi;
     public static DriveSubsystem driveSub;
-    public static IntakeSubsystem armSub;
     public static CompressorSubsystem compressor;
     public static SensorSubsystem sensors;
     public static IntakeSubsystem intakeSub;
