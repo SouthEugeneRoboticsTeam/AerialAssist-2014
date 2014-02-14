@@ -5,7 +5,7 @@ import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.buttons.Button;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
 import edu.wpi.first.wpilibj.templates.commands.ChangeDriveMode;
-import edu.wpi.first.wpilibj.templates.commands.ChangeIntakePosition;
+import edu.wpi.first.wpilibj.templates.commands.ChangeArmPosition;
 import edu.wpi.first.wpilibj.templates.commands.ChangeKickerPosition;
 import edu.wpi.first.wpilibj.templates.commands.MoveToDistance;
 import edu.wpi.first.wpilibj.templates.commands.MoveToPosition;
@@ -51,13 +51,14 @@ public class OI {
     
     Joystick leftDriveStick;
     Joystick rightDriveStick;
+    Joystick shootStick;
     
     Button leftChangeDriveMode;
     Button rightChangeDriveMode;
     Button rotationForward;
     Button rotationReverse;
     Button slowMode;
-    Button changeIntakePostion;
+    Button changeArmPostion;
     Button changeKickerPosition;
     Button offboardCompressor;
             
@@ -66,6 +67,7 @@ public class OI {
     public OI() {
         leftDriveStick = new Joystick(RobotMap.LEFT_DRIVE_STICK_PORT);
         rightDriveStick = new Joystick(RobotMap.RIGHT_DRIVE_STICK_PORT);
+        shootStick = new Joystick(RobotMap.SHOOT_STICK_PORT);
         initButtons();
     }
     
@@ -83,7 +85,7 @@ public class OI {
         rotationForward = new JoystickButton(leftDriveStick, 8);
         rotationReverse = new JoystickButton(leftDriveStick, 9);
         slowMode = new JoystickButton(leftDriveStick, 7);
-        changeIntakePostion = new JoystickButton(leftDriveStick, 2);
+        changeArmPostion = new JoystickButton(leftDriveStick, 2);
         changeKickerPosition = new JoystickButton(leftDriveStick, 3);
         offboardCompressor = new JoystickButton(leftDriveStick, 10);
         
@@ -97,7 +99,7 @@ public class OI {
         rotationForward.whenPressed(new MoveToPosition(10));
         rotationReverse.whenPressed(new MoveToPosition(-5));
         slowMode.whenPressed(new SlowDrive());
-        changeIntakePostion.whenPressed(new ChangeIntakePosition());
+        changeArmPostion.whenPressed(new ChangeArmPosition());
         changeKickerPosition.whenPressed(new ChangeKickerPosition());
         offboardCompressor.whileHeld(new Pressurize(2));
     }
@@ -108,6 +110,9 @@ public class OI {
     
     public Joystick getRightDriveStick() {
         return rightDriveStick;
+    }
+    public Joystick getShootStick() {
+        return shootStick;
     }
 }
 
