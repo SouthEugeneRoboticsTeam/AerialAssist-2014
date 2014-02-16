@@ -8,6 +8,7 @@ package edu.wpi.first.wpilibj.templates.subsystems;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.networktables.NetworkTable;
 
+
 /**
  *
  * @author Aubrey
@@ -15,10 +16,10 @@ import edu.wpi.first.wpilibj.networktables.NetworkTable;
 public class SensorSubsystem extends Subsystem {
     // Put methods for controlling this subsystem
     // here. Call these from Commands.
-    //NetworkTable table;
+    NetworkTable m_table;
     
-    public SensorSubsystem() {
-        //table = NetworkTable.getTable("SmartDashboard");
+    public SensorSubsystem(NetworkTable table) {
+        m_table = table;
     }
     
     public int getBlobCount() {
@@ -28,8 +29,11 @@ public class SensorSubsystem extends Subsystem {
     }
     
     public double getDistance() {
-        //TODO add code to return the distance from the Ultrasonic sensor.
-        return 0;
+        int[] blobs = (int[]) m_table.getValue("BLOB_TRACKING");
+        int y_PixelDistance = Math.abs(blobs[5] - blobs[2]);
+        double angularDist = 50.25 * y_PixelDistance / 480;
+        double distance = .75*((11 / Math.tan(angularDist)) + (Math.sqrt(121 - 4920 * Math.tan(angularDist) * Math.tan(angularDist)) / Math.tan(angularDist)));
+        return distance;
     }
     
 

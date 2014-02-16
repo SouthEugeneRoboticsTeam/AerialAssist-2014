@@ -8,6 +8,7 @@ package edu.wpi.first.wpilibj.templates.subsystems;
 import edu.wpi.first.wpilibj.Compressor;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.templates.RobotMap;
+import edu.wpi.first.wpilibj.templates.commands.Pressurize;
 
 /**
  *
@@ -37,6 +38,6 @@ public class CompressorSubsystem extends Subsystem {
     }
     
     public void initDefaultCommand(){
-        //setDefaultCommand(new Pressurize(1));
+        setDefaultCommand(new Pressurize(1));
     }
 }

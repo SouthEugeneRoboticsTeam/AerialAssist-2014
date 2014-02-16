@@ -12,11 +12,10 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
  *
  * @author Aubrey
  */
-public class Autonomous extends CommandGroup {
+public class AutonomousHotSecond extends CommandGroup {
     
-    public Autonomous() {
+    public AutonomousHotSecond() {
         addParallel(new MoveToDistance(181));
         
-        //TODO figure out how to do conditional for when to eject the ball
     }
 }

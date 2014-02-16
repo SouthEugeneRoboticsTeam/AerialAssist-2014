@@ -8,14 +8,13 @@
 package edu.wpi.first.wpilibj.templates;
 
 
-import edu.wpi.first.wpilibj.DriverStationLCD;
 import edu.wpi.first.wpilibj.IterativeRobot;
-import edu.wpi.first.wpilibj.command.Command;
+import edu.wpi.first.wpilibj.command.CommandGroup;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 import edu.wpi.first.wpilibj.networktables.NetworkTable;
-import edu.wpi.first.wpilibj.networktables2.client.NetworkTableClient;
-import edu.wpi.first.wpilibj.tables.TableKeyNotDefinedException;
+import edu.wpi.first.wpilibj.templates.commands.AutonomousHotFirst;
+import edu.wpi.first.wpilibj.templates.commands.AutonomousHotSecond;
 import edu.wpi.first.wpilibj.templates.commands.CommandBase;
 
 /**
@@ -27,7 +26,10 @@ import edu.wpi.first.wpilibj.templates.commands.CommandBase;
  */
 public class RobotTemplate extends IterativeRobot {
     NetworkTable table;
-
+    CommandGroup autonomousHotFirst;
+    CommandGroup autonomousHotSecond;
+    int[] defaultBlobs = new int[6];
+    
 
     /**
      * This function is run when the robot is first started up and should be
@@ -35,14 +37,28 @@ public class RobotTemplate extends IterativeRobot {
      */
     public void robotInit() {
         
-//        table = NetworkTable.getTable("SmartDashboard");
         
         // Initialize all subsystems
-            CommandBase.init();
+        CommandBase.init(table);
+        table = NetworkTable.getTable("SmartDash");
+        autonomousHotFirst = new AutonomousHotFirst();
+        autonomousHotSecond = new AutonomousHotSecond();
     }
 
     public void autonomousInit() {
-        // schedule the autonomous command (example)
+        int[] blobs = (int[]) table.getValue("BLOB_TRACKING", defaultBlobs);
+        int blobCount = blobs.length / 3;
+        switch (blobCount) {
+            case 1:
+                autonomousHotSecond.start();
+                break;
+            case 2:
+                autonomousHotFirst.start();
+                break;
+            default:
+                autonomousHotFirst.start();
+                break;
+        }
         
     }
 
@@ -65,12 +81,6 @@ public class RobotTemplate extends IterativeRobot {
      */
     public void teleopPeriodic() {
         Scheduler.getInstance().run();
-//        try {
-//            DriverStationLCD.getInstance().println(DriverStationLCD.Line.kUser3, 1, String.valueOf(table.getNumber("BLOB_COUNT", 1)));
-//        } catch (TableKeyNotDefinedException ex) {
-//            
-//        }
-//        DriverStationLCD.getInstance().updateLCD();
     }
     
     /**

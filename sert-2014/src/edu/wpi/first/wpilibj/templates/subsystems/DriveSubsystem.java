@@ -22,9 +22,11 @@ public class DriveSubsystem extends Subsystem {
     public DriveSubsystem() {
         try{
             drive = new CANRobotDrive(new CANJaguarMaster(RobotMap.LEFT_FRONT_DRIVE_JAG, new CANJaguar(RobotMap.LEFT_REAR_DRIVE_JAG, CANJaguar.ControlMode.kVoltage)), new CANJaguarMaster(RobotMap.RIGHT_FRONT_DRIVE_JAG, new CANJaguar(RobotMap.RIGHT_REAR_DRIVE_JAG, CANJaguar.ControlMode.kVoltage)));
+            drive.changeControlMode(CANJaguar.ControlMode.kPosition);
             drive.configEncoderCodesPerRev(360); 
             drive.setPositionReference(CANJaguar.PositionReference.kQuadEncoder);
             drive.setPID(RobotMap.K_P, RobotMap.K_I, RobotMap.K_D);
+            drive.changeControlMode(CANJaguar.ControlMode.kPercentVbus);
         } catch (CANTimeoutException ex) {
              ex.printStackTrace();
         }

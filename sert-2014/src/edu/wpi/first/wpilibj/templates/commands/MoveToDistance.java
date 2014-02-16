@@ -37,7 +37,7 @@ public class MoveToDistance extends CommandBase {
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-        return (Math.abs(driveSub.getPosition() - position)) < .05;
+        return (Math.abs(driveSub.getPosition() - position)) < .1;
     }
 
     // Called once after isFinished returns true

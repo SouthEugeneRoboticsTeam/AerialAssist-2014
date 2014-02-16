@@ -24,7 +24,7 @@ public class RobotMap {
     public static final int LEFT_REAR_DRIVE_JAG = 12;
     public static final int RIGHT_FRONT_DRIVE_JAG = 10;
     public static final int RIGHT_REAR_DRIVE_JAG = 32;
-    public static final int INTAKE_JAG = 0; //TODO change this to the correct value
+    public static final int INTAKE_JAG = 23;
     public static final int INTAKE_RAISE_CHANNEL = 1;
     public static final int INTAKE_LOWER_CHANNEL = 2;
     public static final int KICKER_RAISE_CHANNEL = 3;

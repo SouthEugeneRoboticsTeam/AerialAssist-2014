@@ -17,7 +17,7 @@ public class MoveToGoal extends CommandBase {
     public MoveToGoal() {
         requires(sensors);
         requires(driveSub);
-        this.position = sensors.getDistance() /(4 * Math.PI);
+        this.position = sensors.getDistance() /(4 * Math.PI) - 36;
     }
 
     // Called just before this Command runs the first time
@@ -36,7 +36,7 @@ public class MoveToGoal extends CommandBase {
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-        return (Math.abs(driveSub.getPosition() - position)) < .05;
+        return (Math.abs(driveSub.getPosition() - position)) < .1;
     }
 
     // Called once after isFinished returns true
