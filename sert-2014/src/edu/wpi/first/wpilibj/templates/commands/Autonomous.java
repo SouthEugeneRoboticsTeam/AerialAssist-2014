@@ -12,9 +12,9 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
  *
  * @author Aubrey
  */
-public class AutonomousHotFirst extends CommandGroup {
+public class Autonomous extends CommandGroup {
     
-    public AutonomousHotFirst() {
+    public Autonomous() {
         addSequential(new ChangeArmPosition());
         addSequential(new MoveToDistance(168));
         addSequential(new TriggerEject(), 2);

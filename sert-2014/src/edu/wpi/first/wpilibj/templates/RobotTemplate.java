@@ -9,11 +9,12 @@ package edu.wpi.first.wpilibj.templates;
 
 
 import edu.wpi.first.wpilibj.IterativeRobot;
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.CommandGroup;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 import edu.wpi.first.wpilibj.networktables.NetworkTable;
-import edu.wpi.first.wpilibj.templates.commands.AutonomousHotFirst;
+import edu.wpi.first.wpilibj.templates.commands.Autonomous;
 import edu.wpi.first.wpilibj.templates.commands.AutonomousHotSecond;
 import edu.wpi.first.wpilibj.templates.commands.CommandBase;
 
@@ -26,11 +27,11 @@ import edu.wpi.first.wpilibj.templates.commands.CommandBase;
  */
 public class RobotTemplate extends IterativeRobot {
     NetworkTable table;
-    CommandGroup autonomousHotFirst;
+    CommandGroup autonomous;
     CommandGroup autonomousHotSecond;
 
     boolean targeted;
-    
+    double autoStartTime;
 
     /**
      * This function is run when the robot is first started up and should be
@@ -43,12 +44,13 @@ public class RobotTemplate extends IterativeRobot {
         table = NetworkTable.getTable("SDash");
         CommandBase.init(table);
         
-        autonomousHotFirst = new AutonomousHotFirst();
-        autonomousHotSecond = new AutonomousHotSecond();
+        autonomous = new Autonomous();
     }
 
     public void autonomousInit() {
         targeted = false;
+        autoStartTime = Timer.getFPGATimestamp();
+        System.out.println(table.getNumber("DISTANCE", -1));
     }
 
     /**
@@ -57,16 +59,23 @@ public class RobotTemplate extends IterativeRobot {
     public void autonomousPeriodic() {
         int blobCount = (int) table.getNumber("BLOB_COUNT");
         
+        if ((autoStartTime + 6) < Timer.getFPGATimestamp()) {
+            blobCount = 2;
+        }
+        
         if (!targeted) {
             switch (blobCount) {
                 case 1:
                     break;
                 case 2:
-                    autonomousHotFirst.start();
                     targeted = true;
+                    autonomous.start();
                     break;
             }
         }
+        
+        
+        
         Scheduler.getInstance().run();
     }
 
@@ -75,7 +84,7 @@ public class RobotTemplate extends IterativeRobot {
         // teleop starts running. If you want the autonomous to 
         // continue until interrupted by another command, remove
         // this line or comment it out.
-        autonomousHotFirst.cancel();
+        autonomous.cancel();
         
     }
 

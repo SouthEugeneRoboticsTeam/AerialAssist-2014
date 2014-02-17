@@ -7,11 +7,9 @@ import edu.wpi.first.wpilibj.templates.commands.ChangeDriveMode;
 import edu.wpi.first.wpilibj.templates.commands.ChangeArmPosition;
 import edu.wpi.first.wpilibj.templates.commands.ChangeKickerPosition;
 import edu.wpi.first.wpilibj.templates.commands.MoveToDistance;
-import edu.wpi.first.wpilibj.templates.commands.MoveToPosition;
-import edu.wpi.first.wpilibj.templates.commands.Pressurize;
+import edu.wpi.first.wpilibj.templates.commands.PrintDistance;
 import edu.wpi.first.wpilibj.templates.commands.ResetAutonomous;
 import edu.wpi.first.wpilibj.templates.commands.SlowDrive;
-import edu.wpi.first.wpilibj.templates.commands.SmartPing;
 import edu.wpi.first.wpilibj.templates.commands.TriggerEject;
 import edu.wpi.first.wpilibj.templates.commands.TriggerIntake;
 
@@ -69,6 +67,7 @@ public class OI {
     Button intake;
     Button eject;
     Button autonomousReset;
+    Button printDistance;
     Button updateSFX;
             
     public static OI instance;
@@ -101,6 +100,7 @@ public class OI {
         intake = new JoystickButton(leftDriveStick, 1);
         eject = new JoystickButton(shootStick, 1);
         autonomousReset = new JoystickButton(shootStick, 10);
+        printDistance = new JoystickButton(leftDriveStick, 10);
        // offboardCompressor = new JoystickButton(leftDriveStick, 10);
        //updateSFX = new JoystickButton(shootStick, 10);
         
@@ -121,8 +121,7 @@ public class OI {
         intake.whileHeld(new TriggerIntake());
         eject.whileHeld(new TriggerEject());
         autonomousReset.whenPressed(new ResetAutonomous());
-            
-        //offboardCompressor.whileHeld(new Pressurize(2));
+        printDistance.whenPressed(new PrintDistance());
         //updateSFX.whenPressed(new SmartPing());
     }
     

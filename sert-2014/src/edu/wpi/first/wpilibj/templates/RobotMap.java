@@ -34,7 +34,7 @@ public class RobotMap {
     public static final int PRESSURE_SWITCH_CHANNEL_1 = 1;
     public static final int PRESSURE_SWITCH_CHANNEL_2 = 2;
     public static final double AUTONOMOUS_DISTANCE = 187;
-    public static final double K_P = 35;
-    public static final double K_I = 0;
-    public static final double K_D = .002;
+    public static final double K_P = 10;
+    public static final double K_I = .001;
+    public static final double K_D = 0;
 }
