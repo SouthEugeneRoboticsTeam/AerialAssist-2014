@@ -15,7 +15,7 @@ import edu.wpi.first.wpilibj.templates.RobotMap;
  */
 public class KickerSubsystem extends Subsystem {
     DoubleSolenoid kicker;
-    private boolean isUp = true;
+    private boolean isUp = false;
         
     public KickerSubsystem() {
         kicker = new DoubleSolenoid(RobotMap.KICKER_RAISE_CHANNEL, RobotMap.KICKER_LOWER_CHANNEL);

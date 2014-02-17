@@ -24,16 +24,12 @@ public class SensorSubsystem extends Subsystem {
     
     public int getBlobCount() {
         //TODO make sure this is the right key name
-        //return (int) table.getNumber("BLOB_COUNT", 2);
-        return 0;
+        return (int) m_table.getNumber("BLOB_COUNT", -1);
     }
     
     public double getDistance() {
-        int[] blobs = (int[]) m_table.getValue("BLOB_TRACKING");
-        int y_PixelDistance = Math.abs(blobs[5] - blobs[2]);
-        double angularDist = 50.25 * y_PixelDistance / 480;
-        double distance = .75*((11 / Math.tan(angularDist)) + (Math.sqrt(121 - 4920 * Math.tan(angularDist) * Math.tan(angularDist)) / Math.tan(angularDist)));
-        return distance;
+        return m_table.getNumber("DISTANCE");
+
     }
     
 
