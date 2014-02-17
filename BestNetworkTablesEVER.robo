@@ -1,0 +1,173 @@
+<head><version>2.61.0</version></head>
+<Color_Threshold>
+  <blue_end>255</blue_end>
+  <blue_start>150</blue_start>
+  <green_end>255</green_end>
+  <green_start>210</green_start>
+  <red_end>195</red_end>
+  <red_start>0</red_start>
+</Color_Threshold>
+<Blob_Size>
+  <limit>2</limit>
+  <mask>TRUE</mask>
+  <max_area>0</max_area>
+  <min_area>450</min_area>
+  <threshold>0</threshold>
+  <treat_as_color_image>FALSE</treat_as_color_image>
+</Blob_Size>
+<Blob_Border disabled/>
+<Blob_Label/>
+<Blob_Count/>
+<Blob_Tracking>
+  <absent_after_frames>1</absent_after_frames>
+  <aspect_weight>10</aspect_weight>
+  <blob_image>Current</blob_image>
+  <color_weight>10</color_weight>
+  <display_as_annotation>FALSE</display_as_annotation>
+  <display_id>TRUE</display_id>
+  <display_trail>TRUE</display_trail>
+  <graphic_color_index>6</graphic_color_index>
+  <histogram_weight>10</histogram_weight>
+  <id_font_size_index>1</id_font_size_index>
+  <length_limit>150</length_limit>
+  <location_weight>10</location_weight>
+  <match_threshold>1</match_threshold>
+  <orientation_weight>10</orientation_weight>
+  <overlap_weight>10</overlap_weight>
+  <present_after_frames>0</present_after_frames>
+  <present_after_pixels>0</present_after_pixels>
+  <raw_image>Source</raw_image>
+  <remove_untracked_blobs>FALSE</remove_untracked_blobs>
+  <shape_weight>10</shape_weight>
+  <size_weight>10</size_weight>
+  <tracking_precision>1.0</tracking_precision>
+  <track_aspect>TRUE</track_aspect>
+  <track_color>TRUE</track_color>
+  <track_histogram>TRUE</track_histogram>
+  <track_location>TRUE</track_location>
+  <track_orientation>TRUE</track_orientation>
+  <track_overlap>TRUE</track_overlap>
+  <track_shape>TRUE</track_shape>
+  <track_size>TRUE</track_size>
+  <trail_length>5</trail_length>
+</Blob_Tracking>
+<Sort_Variables>
+  <primary_field_offset>0</primary_field_offset>
+  <primary_record_size>1</primary_record_size>
+  <secondary_field_offset>0</secondary_field_offset>
+  <secondary_record_size>1</secondary_record_size>
+  <tertiary_field_offset>0</tertiary_field_offset>
+  <tertiary_record_size>1</tertiary_record_size>
+</Sort_Variables>
+<Calculate_Distance>
+  <x_end>BLOB_TRACKING_35_X</x_end>
+  <x_start>BLOB_TRACKING_34_X</x_start>
+  <y_end>BLOB_TRACKING_35_Y</y_end>
+  <y_start>BLOB_TRACKING_34_Y</y_start>
+</Calculate_Distance>
+<Display_Variables>
+  <border_color>red</border_color>
+  <dim_background>TRUE</dim_background>
+  <display_as_annotation>FALSE</display_as_annotation>
+  <display_value_only>FALSE</display_value_only>
+  <font_color>white</font_color>
+  <font_size>Huge (24pt)</font_size>
+  <northeast>BLOB_COUNT
+</northeast>
+  <northwest>BLOB_TRACKING
+</northwest>
+  <west>CALCULATE_DISTANCE
+</west>
+</Display_Variables>
+<CScript_Program>
+  <script>int arr[6];
+int arr2[6];
+
+int Y1 = getVariable("BLOB_TRACKING:5");
+int Y2 = getVariable("BLOB_TRACKING:2");
+
+double y_PixelDistance = fabs(Y1-Y2);
+double angularDist = 50.25 * y_PixelDistance / 480;
+double distance = (0.75) * ((11 / tan(angularDist)) + (sqrt(121 - 4920 * tan(angularDist) * tan(angularDist)) / tan(angularDist)));
+
+setVariable("DISTANCE", distance);
+</script>
+  <source_mode>gui</source_mode>
+  <tab_size_index>1</tab_size_index>
+</CScript_Program>
+<NetworkTables>
+  <delay>100</delay>
+  <filter_type_index>0</filter_type_index>
+  <hostname>10.25.21.2</hostname>
+  <port>1735</port>
+  <prefix>/SDash/</prefix>
+  <variables_to_send>BLOB_COUNT
+Y1
+Y2</variables_to_send>
+  <variable_type_index>0</variable_type_index>
+</NetworkTables>
+<function>
+<function_name>Image based targeting</function_name>
+<function_always_run>0</function_always_run>
+<RGB_Filter>
+  <channel>4</channel>
+  <hue_value>36</hue_value>
+  <hysteresis>0</hysteresis>
+  <min_value>216</min_value>
+  <result_type>2</result_type>
+</RGB_Filter>
+<Blob_Border disabled/>
+<Blob_Count/>
+<Blob_Tracking>
+  <absent_after_frames>1</absent_after_frames>
+  <aspect_weight>1.0</aspect_weight>
+  <blob_image>Current</blob_image>
+  <color_weight>1.0</color_weight>
+  <display_as_annotation>FALSE</display_as_annotation>
+  <display_id>TRUE</display_id>
+  <display_trail>TRUE</display_trail>
+  <graphic_color_index>6</graphic_color_index>
+  <histogram_weight>1.0</histogram_weight>
+  <id_font_size_index>1</id_font_size_index>
+  <length_limit>150</length_limit>
+  <location_weight>1.0</location_weight>
+  <match_threshold>0.75</match_threshold>
+  <orientation_weight>1.0</orientation_weight>
+  <overlap_weight>1.0</overlap_weight>
+  <present_after_frames>5</present_after_frames>
+  <present_after_pixels>0</present_after_pixels>
+  <raw_image>Source</raw_image>
+  <remove_untracked_blobs>FALSE</remove_untracked_blobs>
+  <shape_weight>1.0</shape_weight>
+  <size_weight>1.0</size_weight>
+  <tracking_precision>1.0</tracking_precision>
+  <track_aspect>FALSE</track_aspect>
+  <track_color>FALSE</track_color>
+  <track_histogram>FALSE</track_histogram>
+  <track_location>FALSE</track_location>
+  <track_orientation>FALSE</track_orientation>
+  <track_overlap>TRUE</track_overlap>
+  <track_shape>FALSE</track_shape>
+  <track_size>FALSE</track_size>
+  <trail_length>5</trail_length>
+</Blob_Tracking>
+<Blob_Label/>
+<Display_Variables>
+  <border_color>blue</border_color>
+  <dim_background>TRUE</dim_background>
+  <display_as_annotation>FALSE</display_as_annotation>
+  <display_value_only>FALSE</display_value_only>
+  <font_color>white</font_color>
+  <font_size>Normal (10pt)</font_size>
+  <north>BLOB_TRACKING_COUNT
+BLOB_COUNT
+</north>
+  <northeast>FPS
+</northeast>
+  <northwest>CALCULATE_DISTANCE
+</northwest>
+  <west>MOUSE_X
+MOUSE_Y
+</west>
+</Display_Variables>
+</function>
