@@ -1,4 +1,3 @@
-
 package edu.wpi.first.wpilibj.templates;
 
 import edu.wpi.first.wpilibj.Joystick;
@@ -11,6 +10,8 @@ import edu.wpi.first.wpilibj.templates.commands.MoveToDistance;
 import edu.wpi.first.wpilibj.templates.commands.MoveToPosition;
 import edu.wpi.first.wpilibj.templates.commands.Pressurize;
 import edu.wpi.first.wpilibj.templates.commands.SlowDrive;
+import edu.wpi.first.wpilibj.templates.commands.SmartPing;
+import edu.wpi.first.wpilibj.templates.commands.TriggerIntake;
 
 /**
  * This class is the glue that binds the controls on the physical operator
@@ -61,6 +62,8 @@ public class OI {
     Button changeArmPostion;
     Button changeKickerPosition;
     Button offboardCompressor;
+    Button intake;
+    Button updateSFX;
             
     public static OI instance;
     
@@ -80,14 +83,16 @@ public class OI {
     }
     
     private void initButtons() {
-        leftChangeDriveMode = new JoystickButton(leftDriveStick, 1);
-        rightChangeDriveMode = new JoystickButton(rightDriveStick, 1);
+        leftChangeDriveMode = new JoystickButton(leftDriveStick, 6);
+        rightChangeDriveMode = new JoystickButton(rightDriveStick, 6);
         rotationForward = new JoystickButton(leftDriveStick, 8);
         rotationReverse = new JoystickButton(leftDriveStick, 9);
         slowMode = new JoystickButton(leftDriveStick, 7);
-        changeArmPostion = new JoystickButton(leftDriveStick, 2);
-        changeKickerPosition = new JoystickButton(leftDriveStick, 3);
-        offboardCompressor = new JoystickButton(leftDriveStick, 10);
+        changeArmPostion = new JoystickButton(shootStick, 3);
+        changeKickerPosition = new JoystickButton(shootStick, 2);
+        intake = new JoystickButton(leftDriveStick, 1);
+       // offboardCompressor = new JoystickButton(leftDriveStick, 10);
+        updateSFX = new JoystickButton(shootStick, 10);
         
         tieButtons();
     }
@@ -97,11 +102,13 @@ public class OI {
         rightChangeDriveMode.whenPressed(new ChangeDriveMode());
         //Change amount each button drives
         rotationForward.whenPressed(new MoveToPosition(10));
-        rotationReverse.whenPressed(new MoveToPosition(-5));
+        rotationReverse.whenPressed(new MoveToDistance(-20));
         slowMode.whenPressed(new SlowDrive());
         changeArmPostion.whenPressed(new ChangeArmPosition());
         changeKickerPosition.whenPressed(new ChangeKickerPosition());
-        offboardCompressor.whileHeld(new Pressurize(2));
+        intake.whileHeld(new TriggerIntake());
+        //offboardCompressor.whileHeld(new Pressurize(2));
+        updateSFX.whenPressed(new SmartPing());
     }
     
     public Joystick getLeftDriveStick() {

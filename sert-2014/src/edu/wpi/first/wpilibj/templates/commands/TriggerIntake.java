@@ -6,15 +6,14 @@
 package edu.wpi.first.wpilibj.templates.commands;
 
 import edu.wpi.first.wpilibj.can.CANTimeoutException;
-import edu.wpi.first.wpilibj.templates.OI;
 
 /**
  *
- * @author Aubrey
+ * @author SERT
  */
-public class Intake extends CommandBase {
+public class TriggerIntake extends CommandBase {
     
-    public Intake() {
+    public TriggerIntake() {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
         requires(intakeSub);
@@ -27,7 +26,7 @@ public class Intake extends CommandBase {
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
         try {
-            intakeSub.intakeControl(OI.getInstance().getShootStick().getY());
+            intakeSub.intake();
         } catch (CANTimeoutException ex) {
             ex.printStackTrace();
         }
@@ -40,10 +39,16 @@ public class Intake extends CommandBase {
 
     // Called once after isFinished returns true
     protected void end() {
+        try {
+            intakeSub.stopIntake();
+        } catch (CANTimeoutException ex) {
+            ex.printStackTrace();
+        }
     }
 
     // Called when another command which requires one or more of the same
     // subsystems is scheduled to run
     protected void interrupted() {
+        end();
     }
 }
