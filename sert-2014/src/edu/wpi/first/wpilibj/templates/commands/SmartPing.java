@@ -5,52 +5,40 @@
  */
 package edu.wpi.first.wpilibj.templates.commands;
 
-import edu.wpi.first.wpilibj.CANJaguar;
+import edu.wpi.first.wpilibj.networktables.NetworkTable;
 
 /**
  *
- * @author Aubrey
+ * @author SERT
  */
-public class MoveToPosition extends CommandBase {
-    double position;
-    boolean first = true;
-    
-    //moves to the given distance in inches
-    public MoveToPosition(double position) {
-        requires(driveSub);
-        this.position = position;
+public class SmartPing extends CommandBase {
+    NetworkTable table;
+    public SmartPing() {
+        // Use requires() here to declare subsystem dependencies
+        // eg. requires(chassis);
     }
 
     // Called just before this Command runs the first time
     protected void initialize() {
+        table = NetworkTable.getTable("SDash");
     }
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-        if (first) {
-            driveSub.changeControlMode(CANJaguar.ControlMode.kPosition);
-            driveSub.enableControl();
-            first = false;
-        } 
-        System.out.println(driveSub.getPosition());
-        driveSub.moveToPosition(position);
+        table.putNumber("o", table.getNumber("o")+1);
     }
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-        return (Math.abs(driveSub.getPosition() - position)) < .1;
+        return false;
     }
 
     // Called once after isFinished returns true
     protected void end() {
-        driveSub.disableControl();
-        driveSub.changeControlMode(CANJaguar.ControlMode.kPercentVbus);
-        first = true;
     }
 
     // Called when another command which requires one or more of the same
     // subsystems is scheduled to run
     protected void interrupted() {
-        end();
     }
 }

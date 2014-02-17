@@ -5,19 +5,21 @@
  */
 package edu.wpi.first.wpilibj.templates.commands;
 
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.can.CANTimeoutException;
-import edu.wpi.first.wpilibj.templates.OI;
 
 /**
  *
- * @author Aubrey
+ * @author SERT
  */
-public class Intake extends CommandBase {
+public class TriggerIntake extends CommandBase {
+    boolean first = true;
     
-    public Intake() {
+    public TriggerIntake() {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
         requires(intakeSub);
+        requires(kickerSub);
     }
 
     // Called just before this Command runs the first time
@@ -26,8 +28,24 @@ public class Intake extends CommandBase {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-        try {
-            intakeSub.intakeControl(OI.getInstance().getShootStick().getY());
+        if (first) {
+            if(intakeSub.isUp()) {
+                intakeSub.lowerArm();
+                Timer.delay(.01);               //minimum time for Solenoid to switch positions
+                intakeSub.resetArmSolenoid();      //sets solenoid to off to prevent burning it out
+            }
+
+            if (kickerSub.isUp()) {
+                kickerSub.lowerKicker();
+                Timer.delay(.01);
+                kickerSub.resetKickerSolenoid();
+            }
+            
+            first = false;
+        }
+        
+         try {
+            intakeSub.intake();
         } catch (CANTimeoutException ex) {
             ex.printStackTrace();
         }
@@ -40,10 +58,17 @@ public class Intake extends CommandBase {
 
     // Called once after isFinished returns true
     protected void end() {
+        try {
+            intakeSub.stopIntake();
+        } catch (CANTimeoutException ex) {
+            ex.printStackTrace();
+        }
+        first = true;
     }
-
+    
     // Called when another command which requires one or more of the same
     // subsystems is scheduled to run
     protected void interrupted() {
+        end();
     }
 }

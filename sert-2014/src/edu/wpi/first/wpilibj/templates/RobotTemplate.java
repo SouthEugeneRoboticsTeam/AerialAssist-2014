@@ -28,7 +28,8 @@ public class RobotTemplate extends IterativeRobot {
     NetworkTable table;
     CommandGroup autonomousHotFirst;
     CommandGroup autonomousHotSecond;
-    int[] defaultBlobs = new int[6];
+
+    boolean targeted;
     
 
     /**
@@ -39,33 +40,33 @@ public class RobotTemplate extends IterativeRobot {
         
         
         // Initialize all subsystems
+        table = NetworkTable.getTable("SDash");
         CommandBase.init(table);
-        table = NetworkTable.getTable("SmartDash");
+        
         autonomousHotFirst = new AutonomousHotFirst();
         autonomousHotSecond = new AutonomousHotSecond();
     }
 
     public void autonomousInit() {
-        int[] blobs = (int[]) table.getValue("BLOB_TRACKING", defaultBlobs);
-        int blobCount = blobs.length / 3;
-        switch (blobCount) {
-            case 1:
-                autonomousHotSecond.start();
-                break;
-            case 2:
-                autonomousHotFirst.start();
-                break;
-            default:
-                autonomousHotFirst.start();
-                break;
-        }
-        
+        targeted = false;
     }
 
     /**
      * This function is called periodically during autonomous
      */
     public void autonomousPeriodic() {
+        int blobCount = (int) table.getNumber("BLOB_COUNT");
+        
+        if (!targeted) {
+            switch (blobCount) {
+                case 1:
+                    break;
+                case 2:
+                    autonomousHotFirst.start();
+                    targeted = true;
+                    break;
+            }
+        }
         Scheduler.getInstance().run();
     }
 
@@ -74,6 +75,8 @@ public class RobotTemplate extends IterativeRobot {
         // teleop starts running. If you want the autonomous to 
         // continue until interrupted by another command, remove
         // this line or comment it out.
+        autonomousHotFirst.cancel();
+        
     }
 
     /**

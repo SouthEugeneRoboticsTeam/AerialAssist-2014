@@ -13,6 +13,7 @@ public class TeleoperatedDrive extends CommandBase {
     
     public TeleoperatedDrive() {
         requires(driveSub);
+        requires(sensors);
     }
 
     // Called just before this Command runs the first time
@@ -22,6 +23,7 @@ public class TeleoperatedDrive extends CommandBase {
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
         driveSub.teleoperatedDrive();
+        System.out.println(sensors.getDistance());
         //System.out.println(driveSub.getPosition());
     }
 

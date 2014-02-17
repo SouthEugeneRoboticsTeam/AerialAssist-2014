@@ -5,6 +5,7 @@
  */
 package edu.wpi.first.wpilibj.templates.commands;
 
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.CommandGroup;
 
 
@@ -15,7 +16,9 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
 public class AutonomousHotSecond extends CommandGroup {
     
     public AutonomousHotSecond() {
-        addParallel(new MoveToDistance(181));
+        addSequential(new ChangeArmPosition());
+        addParallel(new MoveToDistance(168));
+        addSequential(new TriggerEject());
         
     }
 }

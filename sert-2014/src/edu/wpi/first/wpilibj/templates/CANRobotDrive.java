@@ -35,14 +35,14 @@ public class CANRobotDrive extends RobotDrive {
     
     //moves the drivetrain to the given postion
     public void moveToPosition(double position) throws CANTimeoutException {
-        m_frontLeftMotor.setX(-position);
-        m_frontRightMotor.setX(position);
+        m_frontLeftMotor.setX(position);
+        m_frontRightMotor.setX(-position);
         if (m_safetyHelper != null) m_safetyHelper.feed();
     }
     
     //returns the value of the position reference
     public double getPosition() throws CANTimeoutException {
-        return m_frontRightMotor.getPosition();
+        return m_frontLeftMotor.getPosition();
     }
     
     //sets the position reference used for the closed loop control on the Jaguar

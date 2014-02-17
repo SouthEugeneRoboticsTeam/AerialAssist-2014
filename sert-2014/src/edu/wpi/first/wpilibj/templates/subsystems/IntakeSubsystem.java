@@ -10,7 +10,7 @@ import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.can.CANTimeoutException;
 import edu.wpi.first.wpilibj.templates.RobotMap;
-import edu.wpi.first.wpilibj.templates.commands.Intake;
+import edu.wpi.first.wpilibj.templates.commands.IntakeControl;
 /**
  *
  * @author SERT
@@ -35,11 +35,16 @@ public class IntakeSubsystem extends Subsystem {
     }
     
     public void intake() throws CANTimeoutException {
-        intake.setX(1);
+        intake.setX(-.5);
     }
+
     
     public void eject() throws CANTimeoutException {
-        intake.setX(-1);
+        intake.setX(.5);
+    }
+    
+    public void stopIntake() throws CANTimeoutException {
+        intake.setX(0);
     }
     
     public void intakeControl(double speed) throws CANTimeoutException {
@@ -61,6 +66,6 @@ public class IntakeSubsystem extends Subsystem {
     }
 
     protected void initDefaultCommand() {
-        setDefaultCommand(new Intake());
+        setDefaultCommand(new IntakeControl());
     }
 }
