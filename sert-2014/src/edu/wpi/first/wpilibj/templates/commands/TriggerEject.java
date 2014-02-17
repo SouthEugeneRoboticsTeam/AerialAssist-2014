@@ -12,10 +12,10 @@ import edu.wpi.first.wpilibj.can.CANTimeoutException;
  *
  * @author SERT
  */
-public class TriggerIntake extends CommandBase {
+public class TriggerEject extends CommandBase {
     boolean first = true;
     
-    public TriggerIntake() {
+    public TriggerEject() {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
         requires(intakeSub);
@@ -34,18 +34,17 @@ public class TriggerIntake extends CommandBase {
                 Timer.delay(.01);               //minimum time for Solenoid to switch positions
                 intakeSub.resetArmSolenoid();      //sets solenoid to off to prevent burning it out
             }
-
-            if (kickerSub.isUp()) {
-                kickerSub.lowerKicker();
-                Timer.delay(.01);
-                kickerSub.resetKickerSolenoid();
-            }
             
             first = false;
         }
+            if (!kickerSub.isUp()) {
+                kickerSub.raiseKicker();
+                Timer.delay(.01);
+                kickerSub.resetKickerSolenoid();
+            }
         
-         try {
-            intakeSub.intake();
+        try {
+            intakeSub.intakeControl(.75);
         } catch (CANTimeoutException ex) {
             ex.printStackTrace();
         }
@@ -58,17 +57,18 @@ public class TriggerIntake extends CommandBase {
 
     // Called once after isFinished returns true
     protected void end() {
+        first = true;
         try {
             intakeSub.stopIntake();
         } catch (CANTimeoutException ex) {
             ex.printStackTrace();
         }
-        first = true;
+        
+        kickerSub.lowerKicker();
     }
-    
+
     // Called when another command which requires one or more of the same
     // subsystems is scheduled to run
     protected void interrupted() {
-        end();
     }
 }

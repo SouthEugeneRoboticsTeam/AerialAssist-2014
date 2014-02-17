@@ -7,6 +7,7 @@ package edu.wpi.first.wpilibj.templates.subsystems;
 
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.networktables.NetworkTable;
+import edu.wpi.first.wpilibj.networktables2.type.NumberArray;
 
 
 /**
@@ -28,9 +29,9 @@ public class SensorSubsystem extends Subsystem {
         return 0;
     }
     
-    public double getDistance() {
-        int[] blobs = (int[]) m_table.getValue("BLOB_TRACKING");
-        int y_PixelDistance = Math.abs(blobs[5] - blobs[2]);
+    public double getDistance() {       
+        NumberArray blobs = (NumberArray) m_table.getValue("BLOB_TRACKING");
+        double y_PixelDistance = Math.abs(((NumberArray) (blobs)).get(5) - ((NumberArray) (blobs)).get(2));
         double angularDist = 50.25 * y_PixelDistance / 480;
         double distance = .75*((11 / Math.tan(angularDist)) + (Math.sqrt(121 - 4920 * Math.tan(angularDist) * Math.tan(angularDist)) / Math.tan(angularDist)));
         return distance;

@@ -15,7 +15,8 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
 public class AutonomousHotFirst extends CommandGroup {
     
     public AutonomousHotFirst() {
-        addSequential(new MoveToDistance(181));
-        addSequential(new ChangeKickerPosition());
+        addSequential(new ChangeArmPosition());
+        addSequential(new MoveToDistance(168));
+        addSequential(new TriggerEject(), 2);
     }
 }
