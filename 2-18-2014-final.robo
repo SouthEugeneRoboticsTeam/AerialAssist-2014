@@ -12,6 +12,7 @@
   <is_active>TRUE</is_active>
   <password>FRC</password>
   <port>80</port>
+  <refresh_index>1</refresh_index>
   <sharpness_value>50</sharpness_value>
   <username>FRC</username>
 </Axis_Internet_Camera>
@@ -27,14 +28,15 @@
   <limit>2</limit>
   <mask>TRUE</mask>
   <max_area>0</max_area>
-  <min_area>200</min_area>
+  <min_area>450</min_area>
   <threshold>0</threshold>
   <treat_as_color_image>FALSE</treat_as_color_image>
 </Blob_Size>
 <Blob_Border disabled/>
+<Blob_Label/>
 <Blob_Count/>
 <Blob_Tracking>
-  <absent_after_frames>1</absent_after_frames>
+  <absent_after_frames>100</absent_after_frames>
   <aspect_weight>10</aspect_weight>
   <blob_image>Current</blob_image>
   <color_weight>10</color_weight>
@@ -43,13 +45,13 @@
   <display_trail>TRUE</display_trail>
   <graphic_color_index>6</graphic_color_index>
   <histogram_weight>10</histogram_weight>
-  <id_font_size_index>1</id_font_size_index>
+  <id_font_size_index>5</id_font_size_index>
   <length_limit>150</length_limit>
   <location_weight>10</location_weight>
   <match_threshold>1</match_threshold>
   <orientation_weight>10</orientation_weight>
   <overlap_weight>10</overlap_weight>
-  <present_after_frames>0</present_after_frames>
+  <present_after_frames>2</present_after_frames>
   <present_after_pixels>0</present_after_pixels>
   <raw_image>Source</raw_image>
   <remove_untracked_blobs>FALSE</remove_untracked_blobs>
@@ -66,26 +68,20 @@
   <track_size>TRUE</track_size>
   <trail_length>5</trail_length>
 </Blob_Tracking>
-<Blob_Label/>
 <CScript_Program>
-  <script>int arr[6];
-int arr2[6];
-int Y1, Y2;
-double y_PixelDistance;
-double angularDist;
+  <script>int X1, X2;
+double x_PixelDistance;
 double distance;
 
-	Y1 = getVariable("BLOB_TRACKING:5");
-	Y2 = getVariable("BLOB_TRACKING:2");
+X1 = getVariable("BLOB_TRACKING:4");
+X2 = getVariable("BLOB_TRACKING:1");
 
-	y_PixelDistance = fabs(Y1-Y2);
-
-	angularDist = (51 * y_PixelDistance / 480) * (3.14159265/180);
-	setFloatVariable("AD", angularDist);
-	distance = (1/20) * ((165 / tan(angularDist)) + sqrt(1117249 * cos(2 * angularDist) - 1062799)) / (sqrt(2) * sin(angularDist));
-
-	setFloatVariable("DISTANCE", distance);
-</script>
+x_PixelDistance = fabs(X1-X2);
+distance = 15030 * pow(x_PixelDistance, -1.090);
+if (!(distance &lt; 300 &amp;&amp; distance &gt; 50)) {
+	distance = 0;
+}
+setFloatVariable("DISTANCE", distance);</script>
   <source_mode>gui</source_mode>
   <tab_size_index>1</tab_size_index>
 </CScript_Program>
@@ -96,10 +92,9 @@ double distance;
   <display_value_only>FALSE</display_value_only>
   <font_color>white</font_color>
   <font_size>Normal (10pt)</font_size>
-  <northeast>BLOB_COUNT
-</northeast>
-  <northwest>BLOB_TRACKING
-</northwest>
+  <north>BLOB_TRACKING
+BLOB_COUNT
+</north>
   <west>DISTANCE
 </west>
 </Display_Variables>
@@ -116,6 +111,14 @@ DISTANCE</variables_to_send>
 <function>
 <function_name>Image based targeting</function_name>
 <function_always_run>0</function_always_run>
+<Load_Image>
+  <filename>C:\Users\SERT\Desktop\2014 Vision assets\Capture.PNG</filename>
+  <frame_delay>33</frame_delay>
+  <load_numbered_images>FALSE</load_numbered_images>
+  <numerical_sort>TRUE</numerical_sort>
+  <page_number>1</page_number>
+  <recursive>TRUE</recursive>
+</Load_Image>
 <RGB_Filter>
   <channel>4</channel>
   <hue_value>36</hue_value>
@@ -125,8 +128,9 @@ DISTANCE</variables_to_send>
 </RGB_Filter>
 <Blob_Border disabled/>
 <Blob_Count/>
+<Blob_Label/>
 <Blob_Tracking>
-  <absent_after_frames>1</absent_after_frames>
+  <absent_after_frames>10</absent_after_frames>
   <aspect_weight>1.0</aspect_weight>
   <blob_image>Current</blob_image>
   <color_weight>1.0</color_weight>
@@ -136,29 +140,58 @@ DISTANCE</variables_to_send>
   <graphic_color_index>6</graphic_color_index>
   <histogram_weight>1.0</histogram_weight>
   <id_font_size_index>1</id_font_size_index>
-  <length_limit>150</length_limit>
+  <length_limit>15</length_limit>
   <location_weight>1.0</location_weight>
-  <match_threshold>0.75</match_threshold>
+  <match_threshold>1</match_threshold>
   <orientation_weight>1.0</orientation_weight>
   <overlap_weight>1.0</overlap_weight>
-  <present_after_frames>5</present_after_frames>
+  <present_after_frames>0</present_after_frames>
   <present_after_pixels>0</present_after_pixels>
   <raw_image>Source</raw_image>
   <remove_untracked_blobs>FALSE</remove_untracked_blobs>
   <shape_weight>1.0</shape_weight>
   <size_weight>1.0</size_weight>
-  <tracking_precision>1.0</tracking_precision>
-  <track_aspect>FALSE</track_aspect>
-  <track_color>FALSE</track_color>
-  <track_histogram>FALSE</track_histogram>
-  <track_location>FALSE</track_location>
-  <track_orientation>FALSE</track_orientation>
+  <tracking_precision>1</tracking_precision>
+  <track_aspect>TRUE</track_aspect>
+  <track_color>TRUE</track_color>
+  <track_histogram>TRUE</track_histogram>
+  <track_location>TRUE</track_location>
+  <track_orientation>TRUE</track_orientation>
   <track_overlap>TRUE</track_overlap>
-  <track_shape>FALSE</track_shape>
-  <track_size>FALSE</track_size>
+  <track_shape>TRUE</track_shape>
+  <track_size>TRUE</track_size>
   <trail_length>5</trail_length>
 </Blob_Tracking>
-<Blob_Label/>
+<Calculate_Distance>
+  <x_end>BLOB_TRACKING_2_X</x_end>
+  <x_start>BLOB_TRACKING_1_X</x_start>
+  <y_end>BLOB_TRACKING_2_Y</y_end>
+  <y_start>BLOB_TRACKING_1_Y</y_start>
+</Calculate_Distance>
+<Blob_Filter>
+  <create_blob_array_variable>TRUE</create_blob_array_variable>
+  <filters>
+    <tab>
+      <filter>
+        <count_threshold>2</count_threshold>
+        <create_array>0</create_array>
+        <filter_id>21</filter_id>
+        <invert_count>0</invert_count>
+        <invert_threshold>0</invert_threshold>
+        <weight_threshold>0</weight_threshold>
+      </filter>
+    </tab>
+    <tab:2/>
+    <tab:3/>
+    <tab:4/>
+    <tab:5/>
+    <tab:6/>
+  </filters>
+  <largest_is_background>FALSE</largest_is_background>
+  <show_weights>TRUE</show_weights>
+  <sort_array_on_x>FALSE</sort_array_on_x>
+  <sort_array_on_y>FALSE</sort_array_on_y>
+</Blob_Filter>
 <Display_Variables>
   <border_color>blue</border_color>
   <dim_background>TRUE</dim_background>

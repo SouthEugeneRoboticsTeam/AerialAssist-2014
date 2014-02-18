@@ -59,7 +59,7 @@ public class RobotTemplate extends IterativeRobot {
     public void autonomousPeriodic() {
         int blobCount = (int) table.getNumber("BLOB_COUNT");
         
-        if ((autoStartTime + 6) < Timer.getFPGATimestamp()) {
+        if ((autoStartTime + 4) < Timer.getFPGATimestamp()) {
             blobCount = 2;
         }
         

@@ -28,7 +28,8 @@ public class IntakeControl extends CommandBase {
     protected void execute() {
         try {
             //negative to reverse direction of control
-            intakeSub.intakeControl(-OI.getInstance().getShootStick().getY());
+            double speed = -OI.getInstance().getShootStick().getY();    
+            intakeSub.intakeControl(speed);
         } catch (CANTimeoutException ex) {
             ex.printStackTrace();
         }
@@ -41,6 +42,11 @@ public class IntakeControl extends CommandBase {
 
     // Called once after isFinished returns true
     protected void end() {
+        try {
+            intakeSub.stopIntake();
+        } catch (CANTimeoutException ex) {
+            ex.printStackTrace();
+        }
     }
 
     // Called when another command which requires one or more of the same

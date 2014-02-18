@@ -19,7 +19,7 @@ import edu.wpi.first.wpilibj.templates.commands.IntakeControl;
 public class IntakeSubsystem extends Subsystem {
     CANJaguar intake;
     DoubleSolenoid arm;
-    private boolean isUp = true;
+    private static boolean isUp = true;
         
     public IntakeSubsystem() {
         try {
@@ -28,16 +28,17 @@ public class IntakeSubsystem extends Subsystem {
             ex.printStackTrace();
         }
         arm = new DoubleSolenoid(RobotMap.INTAKE_RAISE_CHANNEL, RobotMap.INTAKE_LOWER_CHANNEL);
+        raiseArm();
+        
     }
     
-    public boolean isUp() {
+    public static boolean isUp() {
         return isUp;
     }
     
     public void intake() throws CANTimeoutException {
-        intake.setX(-.5);
+        intake.setX(-.7);
     }
-
     
     public void eject() throws CANTimeoutException {
         intake.setX(.5);

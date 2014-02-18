@@ -6,6 +6,7 @@
 package edu.wpi.first.wpilibj.templates.commands;
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
+import edu.wpi.first.wpilibj.templates.RobotMap;
 
 
 /**
@@ -16,7 +17,7 @@ public class Autonomous extends CommandGroup {
     
     public Autonomous() {
         addSequential(new ChangeArmPosition());
-        addSequential(new MoveToDistance(168));
+        addSequential(new MoveToDistance(RobotMap.AUTONOMOUS_DISTANCE));
         addSequential(new TriggerEject(), 2);
     }
 }

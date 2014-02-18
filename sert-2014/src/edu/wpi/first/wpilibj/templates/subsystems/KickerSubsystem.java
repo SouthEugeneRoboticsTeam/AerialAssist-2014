@@ -19,6 +19,7 @@ public class KickerSubsystem extends Subsystem {
         
     public KickerSubsystem() {
         kicker = new DoubleSolenoid(RobotMap.KICKER_RAISE_CHANNEL, RobotMap.KICKER_LOWER_CHANNEL);
+        lowerKicker();
     }
     
     public boolean isUp() {

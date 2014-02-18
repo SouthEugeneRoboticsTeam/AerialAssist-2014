@@ -9,6 +9,7 @@ import edu.wpi.first.wpilibj.templates.commands.ChangeKickerPosition;
 import edu.wpi.first.wpilibj.templates.commands.MoveToDistance;
 import edu.wpi.first.wpilibj.templates.commands.PrintDistance;
 import edu.wpi.first.wpilibj.templates.commands.ResetAutonomous;
+import edu.wpi.first.wpilibj.templates.commands.Score;
 import edu.wpi.first.wpilibj.templates.commands.SlowDrive;
 import edu.wpi.first.wpilibj.templates.commands.TriggerEject;
 import edu.wpi.first.wpilibj.templates.commands.TriggerIntake;
@@ -66,9 +67,11 @@ public class OI {
     Button offboardCompressor;
     Button intake;
     Button eject;
+    Button score;
     Button autonomousReset;
     Button printDistance;
     Button updateSFX;
+    Button moveForward;
             
     public static OI instance;
     
@@ -101,6 +104,8 @@ public class OI {
         eject = new JoystickButton(shootStick, 1);
         autonomousReset = new JoystickButton(shootStick, 10);
         printDistance = new JoystickButton(leftDriveStick, 10);
+        //moveForward = new JoystickButton(leftDriveStick,7);
+        score = new JoystickButton(leftDriveStick, 5);
        // offboardCompressor = new JoystickButton(leftDriveStick, 10);
        //updateSFX = new JoystickButton(shootStick, 10);
         
@@ -112,7 +117,8 @@ public class OI {
         rightChangeDriveMode.whenPressed(new ChangeDriveMode());
         //Change amount each button drives
         rotationForward.whenPressed(new MoveToDistance(20));
-        rotationReverse.whenPressed(new MoveToDistance(-168));
+        rotationReverse.whenPressed(new MoveToDistance(-RobotMap.AUTONOMOUS_DISTANCE));
+        //moveForward.whenPressed(new MoveToDistance(181));
         slowMode.whenPressed(new SlowDrive());
         shooterChangeArmPostion.whenPressed(new ChangeArmPosition());
         shooterChangeKickerPosition.whenPressed(new ChangeKickerPosition());
@@ -122,6 +128,7 @@ public class OI {
         eject.whileHeld(new TriggerEject());
         autonomousReset.whenPressed(new ResetAutonomous());
         printDistance.whenPressed(new PrintDistance());
+        score.whenPressed(new Score());
         //updateSFX.whenPressed(new SmartPing());
     }
     

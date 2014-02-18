@@ -17,7 +17,7 @@ public class MoveToGoal extends CommandBase {
     public MoveToGoal() {
         requires(sensors);
         requires(driveSub);
-        this.position = sensors.getDistance() /(4 * Math.PI) - 36;
+        
     }
 
     // Called just before this Command runs the first time
@@ -27,6 +27,12 @@ public class MoveToGoal extends CommandBase {
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
         if (first) {
+            if(sensors.getDistance() == 0) {
+                position = 0;
+                System.out.println("Bad Distance");
+            } else {
+                position = (sensors.getDistance() - 53) / (4 * Math.PI);
+            }
             driveSub.changeControlMode(CANJaguar.ControlMode.kPosition);
             driveSub.enableControl();
             first = false;
@@ -36,7 +42,7 @@ public class MoveToGoal extends CommandBase {
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-        return (Math.abs(driveSub.getPosition() - position)) < .1;
+        return (Math.abs(driveSub.getPosition() - position)) < .05;
     }
 
     // Called once after isFinished returns true
