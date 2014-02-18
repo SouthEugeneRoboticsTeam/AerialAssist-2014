@@ -50,7 +50,7 @@ public class RobotTemplate extends IterativeRobot {
     public void autonomousInit() {
         targeted = false;
         autoStartTime = Timer.getFPGATimestamp();
-        System.out.println(table.getNumber("DISTANCE", -1));
+        System.out.println(table.getNumber("DISTANCE", 0));
     }
 
     /**

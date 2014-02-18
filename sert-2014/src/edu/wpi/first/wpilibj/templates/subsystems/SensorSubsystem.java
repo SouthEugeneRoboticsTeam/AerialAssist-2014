@@ -29,7 +29,7 @@ public class SensorSubsystem extends Subsystem {
     }
     
     public double getDistance() {
-        return m_table.getNumber("DISTANCE");
+        return m_table.getNumber("DISTANCE", 0);
 
     }
     
