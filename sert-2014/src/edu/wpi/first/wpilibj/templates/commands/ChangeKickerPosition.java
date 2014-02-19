@@ -42,8 +42,6 @@ public class ChangeKickerPosition extends CommandBase {
         } else {
             kickerSub.raiseKicker();
         }
-        Timer.delay(.01);               //minimum time for Solenoid to switch positions
-        kickerSub.resetKickerSolenoid();      //sets solenoid to off to prevent burning it out
     }
     
     protected void interrupted() {

@@ -42,8 +42,6 @@ public class ChangeArmPosition extends CommandBase {
         } else {
             intakeSub.raiseArm();          
         }
-        Timer.delay(.01);               //minimum time for Solenoid to switch positions
-        intakeSub.resetArmSolenoid();      //sets solenoid to off to prevent burning it out
     }
     
     protected void interrupted() {

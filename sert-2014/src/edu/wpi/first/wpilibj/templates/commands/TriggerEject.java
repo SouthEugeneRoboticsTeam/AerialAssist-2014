@@ -31,16 +31,12 @@ public class TriggerEject extends CommandBase {
         if (first) {
             if(intakeSub.isUp()) {
                 intakeSub.lowerArm();
-                Timer.delay(.01);               //minimum time for Solenoid to switch positions
-                intakeSub.resetArmSolenoid();      //sets solenoid to off to prevent burning it out
             }
             
             first = false;
         }
             if (!kickerSub.isUp()) {
                 kickerSub.raiseKicker();
-                Timer.delay(.01);
-                kickerSub.resetKickerSolenoid();
             }
         
         try {
@@ -58,17 +54,19 @@ public class TriggerEject extends CommandBase {
     // Called once after isFinished returns true
     protected void end() {
         first = true;
+        kickerSub.lowerKicker();
         try {
             intakeSub.stopIntake();
         } catch (CANTimeoutException ex) {
             ex.printStackTrace();
         }
         
-        kickerSub.lowerKicker();
+        
     }
 
     // Called when another command which requires one or more of the same
     // subsystems is scheduled to run
     protected void interrupted() {
+        end();
     }
 }

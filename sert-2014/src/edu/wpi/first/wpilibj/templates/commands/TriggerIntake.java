@@ -31,14 +31,10 @@ public class TriggerIntake extends CommandBase {
         if (first) {
             if(intakeSub.isUp()) {
                 intakeSub.lowerArm();
-                Timer.delay(.01);               //minimum time for Solenoid to switch positions
-                intakeSub.resetArmSolenoid();      //sets solenoid to off to prevent burning it out
             }
 
             if (kickerSub.isUp()) {
                 kickerSub.lowerKicker();
-                Timer.delay(.01);
-                kickerSub.resetKickerSolenoid();
             }
             
             first = false;

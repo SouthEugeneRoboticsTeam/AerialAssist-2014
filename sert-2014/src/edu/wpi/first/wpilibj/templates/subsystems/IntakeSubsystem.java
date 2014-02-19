@@ -8,6 +8,7 @@ package edu.wpi.first.wpilibj.templates.subsystems;
 import edu.wpi.first.wpilibj.CANJaguar;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.can.CANTimeoutException;
 import edu.wpi.first.wpilibj.templates.RobotMap;
 import edu.wpi.first.wpilibj.templates.commands.IntakeControl;
@@ -53,13 +54,17 @@ public class IntakeSubsystem extends Subsystem {
     }
     
     public void raiseArm() {
-        arm.set(DoubleSolenoid.Value.kForward);
         isUp = true;
+        arm.set(DoubleSolenoid.Value.kForward);
+        Timer.delay(.01);
+        resetArmSolenoid();
     }
     
     public void lowerArm() {
-        arm.set(DoubleSolenoid.Value.kReverse);
         isUp = false;
+        arm.set(DoubleSolenoid.Value.kReverse);
+        Timer.delay(.01);
+        resetArmSolenoid();
     }
     
     public void resetArmSolenoid() {

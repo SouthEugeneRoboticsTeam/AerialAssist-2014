@@ -6,6 +6,7 @@
 package edu.wpi.first.wpilibj.templates.commands;
 
 import edu.wpi.first.wpilibj.CANJaguar;
+import edu.wpi.first.wpilibj.can.CANTimeoutException;
 
 /**
  *
@@ -32,6 +33,11 @@ public class MoveToDistance extends CommandBase {
             driveSub.enableControl();
             first = false;
         } 
+        try {
+            System.out.println(driveSub.getRightPosition());
+        } catch (CANTimeoutException ex) {
+            ex.printStackTrace();
+        }
         driveSub.moveToPosition(position);
     }
 

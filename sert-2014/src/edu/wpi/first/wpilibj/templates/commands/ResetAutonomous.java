@@ -37,14 +37,10 @@ public class ResetAutonomous extends CommandBase {
     protected void end() {
         if(!intakeSub.isUp()) {
             intakeSub.raiseArm();
-            Timer.delay(.01);               //minimum time for Solenoid to switch positions
-            intakeSub.resetArmSolenoid();      //sets solenoid to off to prevent burning it out
         }
 
         if (kickerSub.isUp()) {
             kickerSub.lowerKicker();
-            Timer.delay(.01);
-            kickerSub.resetKickerSolenoid();
         }   
     }
 

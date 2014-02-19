@@ -6,6 +6,7 @@
 package edu.wpi.first.wpilibj.templates.subsystems;
 
 import edu.wpi.first.wpilibj.DoubleSolenoid;
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.templates.RobotMap;
 
@@ -27,13 +28,17 @@ public class KickerSubsystem extends Subsystem {
     }
     
     public void raiseKicker() {
-        kicker.set(DoubleSolenoid.Value.kForward);
         isUp = true;
+        kicker.set(DoubleSolenoid.Value.kForward);
+        Timer.delay(.01);
+        resetKickerSolenoid();
     }
     
     public void lowerKicker() {
-        kicker.set(DoubleSolenoid.Value.kReverse);
         isUp = false;
+        kicker.set(DoubleSolenoid.Value.kReverse);
+        Timer.delay(.01);
+        resetKickerSolenoid();
     }
     
     public void resetKickerSolenoid() {

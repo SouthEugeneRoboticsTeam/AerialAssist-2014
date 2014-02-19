@@ -45,6 +45,10 @@ public class CANRobotDrive extends RobotDrive {
         return m_frontLeftMotor.getPosition();
     }
     
+    public double getRightPosition() throws CANTimeoutException {
+        return m_frontRightMotor.getPosition();
+    }
+    
     //sets the position reference used for the closed loop control on the Jaguar
     public void setPositionReference(CANJaguar.PositionReference reference) throws CANTimeoutException {
         m_frontLeftMotor.setPositionReference(reference);

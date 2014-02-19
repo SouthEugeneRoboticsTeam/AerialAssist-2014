@@ -128,4 +128,8 @@ public class DriveSubsystem extends Subsystem {
        setDefaultCommand(new TeleoperatedDrive());
     }
 
+    public double getRightPosition() throws CANTimeoutException {
+        return drive.getRightPosition();
+    }
+
 }
