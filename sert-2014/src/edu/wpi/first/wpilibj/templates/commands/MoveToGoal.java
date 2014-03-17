@@ -6,6 +6,7 @@
 package edu.wpi.first.wpilibj.templates.commands;
 
 import edu.wpi.first.wpilibj.CANJaguar;
+import edu.wpi.first.wpilibj.DriverStation;
 /**
  *
  * @author Aubrey
@@ -31,7 +32,7 @@ public class MoveToGoal extends CommandBase {
                 position = 0;
                 System.out.println("Bad Distance");
             } else {
-                position = (sensors.getDistance() - 53) / (4 * Math.PI);
+                position = (sensors.getDistance() - 40) / (4 * Math.PI);
             }
             driveSub.changeControlMode(CANJaguar.ControlMode.kPosition);
             driveSub.enableControl();
