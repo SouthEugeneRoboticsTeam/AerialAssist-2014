@@ -33,7 +33,7 @@ public class RobotMap {
     public static final int OFFBOARD_COMPRESSOR_CHANNEL = 2;
     public static final int PRESSURE_SWITCH_CHANNEL_1 = 1;
     public static final int PRESSURE_SWITCH_CHANNEL_2 = 2;
-    public static final double AUTONOMOUS_DISTANCE = 168;
+    public static final double AUTONOMOUS_DISTANCE = 175;
     public static final double K_P = 30;
     public static final double K_I = 0;
     public static final double K_D = 0;

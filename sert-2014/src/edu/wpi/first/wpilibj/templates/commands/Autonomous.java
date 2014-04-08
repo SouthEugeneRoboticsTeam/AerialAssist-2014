@@ -16,8 +16,9 @@ import edu.wpi.first.wpilibj.templates.RobotMap;
 public class Autonomous extends CommandGroup {
     
     public Autonomous() {
-        addSequential(new MoveToDistance(RobotMap.AUTONOMOUS_DISTANCE));
-        addParallel(new TriggerIntake(), .5);
-        addSequential(new TriggerEject(), 2);
+        
+        addSequential(new TriggerIntake(), .5);
+        addSequential(new MoveToDistance(RobotMap.AUTONOMOUS_DISTANCE), 3);
+        addSequential(new TriggerEject(), 3);
     }
 }

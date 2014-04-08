@@ -5,7 +5,7 @@
  */
 package edu.wpi.first.wpilibj.templates.commands;
 
-import edu.wpi.first.wpilibj.CANJaguar;
+import edu.wpi.first.wpilibj.templates.CANJaguar;
 import edu.wpi.first.wpilibj.DriverStation;
 /**
  *

@@ -6,7 +6,7 @@
 
 package edu.wpi.first.wpilibj.templates;
 
-import edu.wpi.first.wpilibj.CANJaguar;
+import edu.wpi.first.wpilibj.templates.CANJaguar;
 import edu.wpi.first.wpilibj.RobotDrive;
 import edu.wpi.first.wpilibj.can.CANTimeoutException;
 
@@ -21,6 +21,8 @@ public class CANRobotDrive extends RobotDrive {
     static CANJaguarMaster m_frontLeftMotor, m_frontRightMotor;
     static CANJaguar.ControlMode positionControl = CANJaguar.ControlMode.kPosition;
     
+    
+    
     public CANRobotDrive(CANJaguarMaster frontLeftMotor, CANJaguarMaster frontRightMotor) throws CANTimeoutException {
         super(frontLeftMotor, frontRightMotor);
         m_frontLeftMotor = frontLeftMotor;
@@ -30,7 +32,9 @@ public class CANRobotDrive extends RobotDrive {
     //changes the Jaguar's control mode
     public void changeControlMode(CANJaguar.ControlMode mode) throws CANTimeoutException {
         m_frontLeftMotor.changeControlMode(mode);
+     
         m_frontRightMotor.changeControlMode(mode);
+
     }
     
     //moves the drivetrain to the given postion
@@ -83,6 +87,7 @@ public class CANRobotDrive extends RobotDrive {
     public void disableControl() throws CANTimeoutException {
         m_frontLeftMotor.disableControl();
         m_frontRightMotor.disableControl();
+        
     }
     
     //gets the average output voltage of the drive motors

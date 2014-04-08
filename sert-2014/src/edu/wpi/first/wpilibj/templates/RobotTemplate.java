@@ -15,6 +15,7 @@ import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 import edu.wpi.first.wpilibj.networktables.NetworkTable;
 import edu.wpi.first.wpilibj.templates.commands.Autonomous;
+import edu.wpi.first.wpilibj.templates.commands.AutonomousDouble;
 import edu.wpi.first.wpilibj.templates.commands.AutonomousHotSecond;
 import edu.wpi.first.wpilibj.templates.commands.CommandBase;
 
@@ -50,24 +51,23 @@ public class RobotTemplate extends IterativeRobot {
     public void autonomousInit() {
         targeted = false;
         autoStartTime = Timer.getFPGATimestamp();
-        System.out.println(table.getNumber("DISTANCE", 0));
     }
 
     /**
      * This function is called periodically during autonomous
      */
     public void autonomousPeriodic() {
-        int blobCount = (int) table.getNumber("BLOB_COUNT");
+        int blobCount = (int) table.getNumber("BLOB_COUNT", 1);
         
         if ((autoStartTime + 4) < Timer.getFPGATimestamp()) {
             blobCount = 2;
         }
         
-        if (!targeted) {
+        if (!targeted && (autoStartTime + .8 < Timer.getFPGATimestamp())) {
             switch (blobCount) {
                 case 1:
                     break;
-                case 2:
+                default:
                     targeted = true;
                     autonomous.start();
                     break;

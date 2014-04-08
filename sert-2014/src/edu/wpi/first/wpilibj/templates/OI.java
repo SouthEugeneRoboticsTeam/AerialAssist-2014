@@ -92,12 +92,12 @@ public class OI {
     
     private void initButtons() {
         //leftChangeDriveMode = new JoystickButton(leftDriveStick, 6);
-        rightChangeDriveMode = new JoystickButton(rightDriveStick, 6);
+        //rightChangeDriveMode = new JoystickButton(rightDriveStick, 6);
         rotationForward = new JoystickButton(leftDriveStick, 8);
         rotationReverse = new JoystickButton(leftDriveStick, 9);
         slowMode = new JoystickButton(leftDriveStick, 7);
         //shooterChangeArmPostion = new JoystickButton(shootStick, 3);
-        //shooterChangeKickerPosition = new JoystickButton(shootStick, 2);
+        shooterChangeKickerPosition = new JoystickButton(shootStick, 6);
         //driverChangeArmPostion = new JoystickButton(leftDriveStick, 3);
         //driverChangeKickerPosition = new JoystickButton(leftDriveStick, 2);
         intake = new JoystickButton(leftDriveStick, 1);
@@ -105,7 +105,7 @@ public class OI {
         autonomousReset = new JoystickButton(shootStick, 10);
         printDistance = new JoystickButton(leftDriveStick, 10);
         //moveForward = new JoystickButton(leftDriveStick,7);
-        score = new JoystickButton(leftDriveStick, 5);
+        //score = new JoystickButton(leftDriveStick, 5);
        //offboardCompressor = new JoystickButton(leftDriveStick, 10);
        //updateSFX = new JoystickButton(shootStick, 10);
         
@@ -114,21 +114,21 @@ public class OI {
     
     private void tieButtons() {
         //leftChangeDriveMode.whenPressed(new ChangeDriveMode());
-        rightChangeDriveMode.whenPressed(new ChangeDriveMode());
+        //rightChangeDriveMode.whenPressed(new ChangeDriveMode());
         //Change amount each button drives
         //rotationForward.whenPressed(new MoveToDistance(20));
         //rotationReverse.whenPressed(new MoveToDistance(-RobotMap.AUTONOMOUS_DISTANCE));
         //moveForward.whenPressed(new MoveToDistance(181));
         slowMode.whenPressed(new SlowDrive());
         //shooterChangeArmPostion.whenPressed(new ChangeArmPosition());
-        //shooterChangeKickerPosition.whenPressed(new ChangeKickerPosition());
+        shooterChangeKickerPosition.whenPressed(new ChangeKickerPosition());
         //driverChangeArmPostion.whenPressed(new ChangeArmPosition());
         //driverChangeKickerPosition.whenPressed(new ChangeKickerPosition());
         intake.whileHeld(new TriggerIntake());
         eject.whileHeld(new TriggerEject());
         autonomousReset.whenPressed(new ResetAutonomous());
         printDistance.whenPressed(new PrintDistance());
-        score.whenPressed(new Score());
+        //score.whenPressed(new Score());
         //updateSFX.whenPressed(new SmartPing());
     }
     

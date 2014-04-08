@@ -5,7 +5,7 @@
  */
 package edu.wpi.first.wpilibj.templates.commands;
 
-import edu.wpi.first.wpilibj.CANJaguar;
+import edu.wpi.first.wpilibj.templates.CANJaguar;
 import edu.wpi.first.wpilibj.can.CANTimeoutException;
 
 /**
@@ -15,7 +15,7 @@ import edu.wpi.first.wpilibj.can.CANTimeoutException;
 public class MoveToDistance extends CommandBase {
     double position;
     boolean first = true;
-    
+
     //moves to the given distance in inches
     public MoveToDistance(double distance) {
         requires(driveSub);
@@ -24,6 +24,7 @@ public class MoveToDistance extends CommandBase {
 
     // Called just before this Command runs the first time
     protected void initialize() {
+        
     }
 
     // Called repeatedly when this Command is scheduled to run
@@ -33,12 +34,8 @@ public class MoveToDistance extends CommandBase {
             driveSub.enableControl();
             first = false;
         } 
-        try {
-            System.out.println(driveSub.getRightPosition());
-        } catch (CANTimeoutException ex) {
-            ex.printStackTrace();
-        }
-        driveSub.moveToPosition(position);
+        
+            driveSub.moveToPosition(position);
     }
 
     // Make this return true when this Command no longer needs to run execute()
