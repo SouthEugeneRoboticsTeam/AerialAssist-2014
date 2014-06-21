@@ -3,7 +3,7 @@
 #include "../RobotMap.h"
 
 ArmSubsystem::ArmSubsystem() :
-	Subsystem( "ArmSubsystem" )
+b	Subsystem( "ArmSubsystem" )
 {
 	compressor = new Compressor(PRESSURE_SWITCH_CHANNEL, COMPRESSOR_CHANNEL);
 	lifter = new DoubleSolenoid(SOLENOID_RAISE_CHANNEL, SOLENOID_LOWER_CHANNEL);

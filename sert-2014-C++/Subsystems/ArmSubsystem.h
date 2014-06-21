@@ -14,7 +14,6 @@ private:
 	// It's desirable that everything possible under private except
 	// for methods that implement subsystem capabilities
 	
-    Compressor* compressor;
     DoubleSolenoid* lifter;
 
     bool m_isUp;
@@ -26,8 +25,6 @@ public:
 	void RaiseArm();
 	void LowerArm();
 	void ResetArmSolenoid();
-	void StartCompressor();
-	void StopCompressor();
 	void InitDefaultCommand();
 };
 
