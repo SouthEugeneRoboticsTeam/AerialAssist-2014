@@ -3,16 +3,7 @@
 
 #include "CommandBase.h"
 
-class Autonomous : public CommandBase {
-private:
-    bool m_first;
-    
-protected:
-	void Initialize();
-	void Execute();
-	bool IsFinished();
-	void End();
-	void Interrupted();
+class Autonomous : public CommandGroup {
 
 public:
 	Autonomous();
