@@ -1,5 +1,4 @@
 #include "ChangeArmPosition.h"
-#include "Timer.h"
 
 ChangeArmPosition::ChangeArmPosition()
 {
@@ -33,13 +32,6 @@ void ChangeArmPosition::End()
     {
     	m_armSub->RaiseArm();          
     }
-    
-    // Using a timer is not ideal.
-    // We need some type of limit switch input to tell us when we are done.
-    
-    Wait( 1 );
-    
-    m_armSub->ResetArmSolenoid();      //sets solenoid to off to prevent burning it out	
 }
 
 // Called when another command which requires one or more of the same
