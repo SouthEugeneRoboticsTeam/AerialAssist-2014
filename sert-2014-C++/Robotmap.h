@@ -19,16 +19,16 @@
 // #define RANGE_FINDER_PORT 1
 // #define RANGE_FINDER_MODULE 1
 
-static const UINT8 LEFT_DRIVE_STICK_PORT = 1;
-static const UINT8 RIGHT_DRIVE_STICK_PORT = 2;
-static const UINT8 LEFT_FRONT_DRIVE_JAG = 31;
-static const UINT8 LEFT_REAR_DRIVE_JAG = 20;
-static const UINT8 RIGHT_FRONT_DRIVE_JAG = 10;
-static const UINT8 RIGHT_REAR_JAG_DRIVE = 32;
-static const UINT8 SOLENOID_RAISE_CHANNEL = 1;
-static const UINT8 SOLENOID_LOWER_CHANNEL = 2;
-static const UINT8 COMPRESSOR_CHANNEL = 1;
-static const UINT8 PRESSURE_SWITCH_CHANNEL = 1;
+static const uint8_t LEFT_DRIVE_STICK_PORT = 1;
+static const uint8_t RIGHT_DRIVE_STICK_PORT = 2;
+static const uint8_t LEFT_FRONT_DRIVE_JAG = 31;
+static const uint8_t LEFT_REAR_DRIVE_JAG = 20;
+static const uint8_t RIGHT_FRONT_DRIVE_JAG = 10;
+static const uint8_t RIGHT_REAR_JAG_DRIVE = 32;
+static const uint8_t SOLENOID_RAISE_CHANNEL = 1;
+static const uint8_t SOLENOID_LOWER_CHANNEL = 2;
+static const uint8_t COMPRESSOR_CHANNEL = 1;
+static const uint8_t PRESSURE_SWITCH_CHANNEL = 1;
 static const float AUTONOMOUS_DISTANCE = 187;
 
 #endif
