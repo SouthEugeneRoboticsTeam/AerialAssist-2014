@@ -7,7 +7,7 @@
    
 ChangeDriveMode::ChangeDriveMode() 
 {
-	// requires(driveSub);
+	requires(driveSub);
 }
 
 // Called just before this Command runs the first time
