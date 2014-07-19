@@ -6,8 +6,12 @@
 
 package edu.wpi.first.wpilibj.templates;
 
+import com.sun.squawk.GC;
 import edu.wpi.first.wpilibj.templates.CANJaguar;
 import edu.wpi.first.wpilibj.can.CANTimeoutException;
+import edu.wpi.first.wpilibj.templates.commands.CommandBase;
+import edu.wpi.first.wpilibj.templates.subsystems.DriveSubsystem;
+import edu.wpi.first.wpilibj.templates.subsystems.DriveSubsystem.*;
 
 /**
  *
@@ -19,7 +23,7 @@ public class CANJaguarMaster extends CANJaguar {
 
     CANJaguar m_slave;
     CANJaguar.ControlMode currentMode = CANJaguar.ControlMode.kPercentVbus;
-    int counter = 2;
+    int counter = 1;
     
     public CANJaguarMaster(int deviceNumber, CANJaguar slave) throws CANTimeoutException {
         super(deviceNumber);
@@ -38,38 +42,52 @@ public class CANJaguarMaster extends CANJaguar {
     }
     
     public void setX(double outputValue, byte syncGroup) {
-        try {
-            super.setX(outputValue, syncGroup);
-            m_slave.setX(super.getOutputVoltage(), syncGroup);
-        } catch (CANTimeoutException ex) {
-            ex.printStackTrace();
-        }
 //        try {
 //            super.setX(outputValue, syncGroup);
-//            if (currentMode == CANJaguar.ControlMode.kPercentVbus) {
-//                m_slave.setX(outputValue, syncGroup);
-//            } else {
-//                if (++counter == 3) {
-//                    m_slave.setX(super.getOutputVoltage(), syncGroup);
-//                    counter = 0;     
-//                }
-//            }
+//            m_slave.setX(super.getOutputVoltage(), syncGroup);
 //        } catch (CANTimeoutException ex) {
 //            ex.printStackTrace();
 //        }
+        try {
+            
+            if (currentMode == CANJaguar.ControlMode.kPercentVbus) {
+                if (++counter == 2) {
+                    try {
+                        super.setX(outputValue, syncGroup);
+                        m_slave.setX(outputValue, syncGroup);
+                    } catch (Exception ex) {
+                        ex.printStackTrace();
+                    }
+                    
+                    counter = 0;     
+                }
+            } else {
+               super.setX(outputValue, syncGroup);
+               m_slave.setX(super.getOutputVoltage(), syncGroup);
+                
+            }
+        } catch (Exception ex) {
+            //CommandBase.driveSub = new DriveSubsystem();
+            ex.printStackTrace();
+        }
     }
     
     public void set(double outputValue, byte syncGroup) {
         setX(outputValue, syncGroup);
     }
     
-//    public void changeControlMode(CANJaguar.ControlMode mode) throws CANTimeoutException {
-//        currentMode = mode;
-//        super.changeControlMode(mode);
-//        if (mode == CANJaguar.ControlMode.kPercentVbus) {
-//            m_slave.changeControlMode(mode);
-//        } else {
-//            m_slave.changeControlMode(CANJaguar.ControlMode.kVoltage);
-//        }
-//    }
+    public void changeControlMode(CANJaguar.ControlMode mode) throws CANTimeoutException {
+        currentMode = mode;
+        super.changeControlMode(mode);
+        if (mode == CANJaguar.ControlMode.kPercentVbus) {
+            m_slave.changeControlMode(mode);
+        } else {
+            m_slave.changeControlMode(CANJaguar.ControlMode.kVoltage);
+        }
+    }
+    
+    public void setVoltageRampRate(double rampRate) throws CANTimeoutException {
+        super.setVoltageRampRate(rampRate);
+        m_slave.setVoltageRampRate(rampRate);
+    }
 }

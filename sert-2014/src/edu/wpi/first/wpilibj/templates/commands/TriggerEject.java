@@ -42,7 +42,7 @@ public class TriggerEject extends CommandBase {
         try {
             intakeSub.intakeControl(.75);
         } catch (CANTimeoutException ex) {
-            ex.printStackTrace();
+//            ex.printStackTrace();
         }
     }
 
@@ -58,7 +58,7 @@ public class TriggerEject extends CommandBase {
         try {
             intakeSub.stopIntake();
         } catch (CANTimeoutException ex) {
-            ex.printStackTrace();
+//            ex.printStackTrace();
         }
         
         

@@ -26,10 +26,9 @@ public class IntakeSubsystem extends Subsystem {
         try {
             intake = new CANJaguar(RobotMap.INTAKE_JAG);
         } catch (CANTimeoutException ex) {
-            ex.printStackTrace();
+//            ex.printStackTrace();
         }
         arm = new DoubleSolenoid(RobotMap.INTAKE_RAISE_CHANNEL, RobotMap.INTAKE_LOWER_CHANNEL);
-        raiseArm();
         
     }
     
@@ -38,11 +37,11 @@ public class IntakeSubsystem extends Subsystem {
     }
     
     public void intake() throws CANTimeoutException {
-        intake.setX(-.7);
+        intake.setX(-.9);
     }
     
     public void eject() throws CANTimeoutException {
-        intake.setX(.5);
+        intake.setX(.7);
     }
     
     public void stopIntake() throws CANTimeoutException {
@@ -56,15 +55,11 @@ public class IntakeSubsystem extends Subsystem {
     public void raiseArm() {
         isUp = true;
         arm.set(DoubleSolenoid.Value.kForward);
-        Timer.delay(.01);
-        resetArmSolenoid();
     }
     
     public void lowerArm() {
         isUp = false;
         arm.set(DoubleSolenoid.Value.kReverse);
-        Timer.delay(.01);
-        resetArmSolenoid();
     }
     
     public void resetArmSolenoid() {

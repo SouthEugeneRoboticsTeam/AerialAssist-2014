@@ -63,7 +63,7 @@ public class RobotTemplate extends IterativeRobot {
             blobCount = 2;
         }
         
-        if (!targeted && (autoStartTime + .8 < Timer.getFPGATimestamp())) {
+        if (!targeted && (autoStartTime + 1 < Timer.getFPGATimestamp())) {
             switch (blobCount) {
                 case 1:
                     break;
@@ -92,6 +92,7 @@ public class RobotTemplate extends IterativeRobot {
      * This function is called periodically during operator control
      */
     public void teleopPeriodic() {
+        
         Scheduler.getInstance().run();
     }
     

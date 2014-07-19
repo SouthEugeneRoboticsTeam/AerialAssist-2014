@@ -29,7 +29,7 @@ public class IntakeSpeed extends CommandBase {
         try {
             intakeSub.intakeControl(speed);
         } catch (CANTimeoutException ex) {
-            ex.printStackTrace();
+//            ex.printStackTrace();
         }
     }
 
@@ -43,7 +43,7 @@ public class IntakeSpeed extends CommandBase {
         try {
             intakeSub.stopIntake();
         } catch (CANTimeoutException ex) {
-            ex.printStackTrace();
+//            ex.printStackTrace();
         }
     }
 

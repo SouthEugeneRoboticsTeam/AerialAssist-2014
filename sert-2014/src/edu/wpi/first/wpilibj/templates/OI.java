@@ -9,6 +9,7 @@ import edu.wpi.first.wpilibj.templates.commands.ChangeKickerPosition;
 import edu.wpi.first.wpilibj.templates.commands.MoveToDistance;
 import edu.wpi.first.wpilibj.templates.commands.PrintDistance;
 import edu.wpi.first.wpilibj.templates.commands.ResetAutonomous;
+import edu.wpi.first.wpilibj.templates.commands.ResetCANBus;
 import edu.wpi.first.wpilibj.templates.commands.Score;
 import edu.wpi.first.wpilibj.templates.commands.SlowDrive;
 import edu.wpi.first.wpilibj.templates.commands.TriggerEject;
@@ -72,6 +73,7 @@ public class OI {
     Button printDistance;
     Button updateSFX;
     Button moveForward;
+    Button resetCANBus;
             
     public static OI instance;
     
@@ -108,6 +110,7 @@ public class OI {
         //score = new JoystickButton(leftDriveStick, 5);
        //offboardCompressor = new JoystickButton(leftDriveStick, 10);
        //updateSFX = new JoystickButton(shootStick, 10);
+        resetCANBus = new JoystickButton(shootStick, 7);
         
         tieButtons();
     }
@@ -130,6 +133,7 @@ public class OI {
         printDistance.whenPressed(new PrintDistance());
         //score.whenPressed(new Score());
         //updateSFX.whenPressed(new SmartPing());
+        resetCANBus.whenPressed(new ResetCANBus());
     }
     
     public Joystick getLeftDriveStick() {

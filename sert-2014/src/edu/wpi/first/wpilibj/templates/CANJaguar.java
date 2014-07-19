@@ -7,6 +7,8 @@
 
 package edu.wpi.first.wpilibj.templates;
 
+import edu.wpi.first.wpilibj.DriverStation;
+import edu.wpi.first.wpilibj.DriverStationLCD;
 import edu.wpi.first.wpilibj.MotorSafety;
 import edu.wpi.first.wpilibj.MotorSafetyHelper;
 import edu.wpi.first.wpilibj.PIDOutput;
@@ -616,29 +618,37 @@ public class CANJaguar implements MotorSafety, PIDOutput, SpeedController, LiveW
     protected byte setTransaction(int messageID, byte[] data, byte dataSize) throws CANTimeoutException {
         int ackMessageID = JaguarCANProtocol.LM_API_ACK | m_deviceNumber;
         boolean messageRecieved = false;
+        boolean messageSent = false;
         
-        for (int attempt = 0; attempt < 3 && !messageRecieved; attempt++) {
             // Make sure we don't have more than one transaction with the same Jaguar outstanding.
-            synchronized (m_transactionMutex) {
-                // Throw away any stale acks.
-                try {
-                    receiveMessage(ackMessageID, kNoData, 0.0);
-                }
-                catch(CANTimeoutException e) {
-                    
-                }
-                
+        synchronized (m_transactionMutex) {
+            // Throw away any stale acks.
+            try {
+                receiveMessage(ackMessageID, kNoData, 0.0);
+            }
+            catch(CANTimeoutException e) {
+            }
+
+            for (int attempt = 0; attempt < 2 && !messageRecieved; attempt++) {
                 try {
                     // Send the message with the data.
                     sendMessage(messageID | m_deviceNumber, data, dataSize);
+                    messageSent = true;
                     // Wait for an ack.
+                } catch (CANTimeoutException e) {
+                    e.printStackTrace();
+                }
+                
+                try { 
                     dataSize = receiveMessage(ackMessageID, kNoData);
                     messageRecieved = true;
                 } catch (CANTimeoutException e) {
-                    System.out.println("I GOT ONE");
+                    e.printStackTrace();
+                    //DriverStationLCD.getInstance().println(DriverStationLCD.Line.kUser1, 1, "CAN Bus Timeout" + m_deviceNumber);
                 }
             }
         }
+            
         if (!messageRecieved) {
             throw new CANTimeoutException();
         }
@@ -658,7 +668,7 @@ public class CANJaguar implements MotorSafety, PIDOutput, SpeedController, LiveW
         int targetedMessageID = messageID | m_deviceNumber;
         byte dataSize = 0;
         boolean messageRecieved = false;
-        for (int attempt = 0; attempt < 3 && !messageRecieved; attempt++)
+        for (int attempt = 0; attempt < 2 && !messageRecieved; attempt++)
             // Make sure we don't have more than one transaction with the same Jaguar outstanding.
             synchronized (m_transactionMutex) {
                 try {
@@ -670,7 +680,7 @@ public class CANJaguar implements MotorSafety, PIDOutput, SpeedController, LiveW
                     dataSize = receiveMessage(targetedMessageID, data);
                     messageRecieved = true;
                 } catch (CANTimeoutException e) {
-                    System.out.println("I GOT ONE");
+                    DriverStationLCD.getInstance().println(DriverStationLCD.Line.kUser2, 1, "CAN Bus Timeout" + m_deviceNumber);
                 }
             }
         if (!messageRecieved) {
@@ -690,6 +700,12 @@ public class CANJaguar implements MotorSafety, PIDOutput, SpeedController, LiveW
         byte[] dataBuffer = new byte[8];
 
         dataBuffer[0] = reference.value;
+        setTransaction(JaguarCANProtocol.LM_API_SPD_REF, dataBuffer, (byte) 1);
+    }
+    
+    public void resetBus() throws CANTimeoutException {
+        byte[] dataBuffer = new byte[8];
+
         setTransaction(JaguarCANProtocol.LM_API_SPD_REF, dataBuffer, (byte) 1);
     }
 
@@ -1057,7 +1073,7 @@ public class CANJaguar implements MotorSafety, PIDOutput, SpeedController, LiveW
         }
         return 0.0;
     }
-
+    
     /**
      * Get the current through the motor terminals of the Jaguar.
      *

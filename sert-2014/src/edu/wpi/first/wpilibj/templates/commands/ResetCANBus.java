@@ -6,18 +6,17 @@
 package edu.wpi.first.wpilibj.templates.commands;
 
 import edu.wpi.first.wpilibj.can.CANTimeoutException;
-import edu.wpi.first.wpilibj.templates.OI;
 
 /**
  *
- * @author Aubrey
+ * @author SERT
  */
-public class IntakeControl extends CommandBase {
+public class ResetCANBus extends CommandBase {
     
-    public IntakeControl() {
+    public ResetCANBus() {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
-        requires(intakeSub);
+        requires(driveSub);
     }
 
     // Called just before this Command runs the first time
@@ -26,32 +25,25 @@ public class IntakeControl extends CommandBase {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-        try {
-            //negative to reverse direction of control
-            double speed = -OI.getInstance().getShootStick().getY();    
-            intakeSub.intakeControl(speed);
-        } catch (CANTimeoutException ex) {
-//            ex.printStackTrace();
-        }
     }
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-        return false;
+        return true;
     }
 
     // Called once after isFinished returns true
     protected void end() {
         try {
-            intakeSub.stopIntake();
+            driveSub.resetCANBus();
         } catch (CANTimeoutException ex) {
 //            ex.printStackTrace();
         }
     }
+    
 
     // Called when another command which requires one or more of the same
     // subsystems is scheduled to run
     protected void interrupted() {
-        end();
     }
 }

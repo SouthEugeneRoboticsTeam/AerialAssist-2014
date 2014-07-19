@@ -43,7 +43,7 @@ public class TriggerIntake extends CommandBase {
          try {
             intakeSub.intake();
         } catch (CANTimeoutException ex) {
-            ex.printStackTrace();
+//            ex.printStackTrace();
         }
     }
 
@@ -57,7 +57,7 @@ public class TriggerIntake extends CommandBase {
         try {
             intakeSub.stopIntake();
         } catch (CANTimeoutException ex) {
-            ex.printStackTrace();
+//            ex.printStackTrace();
         }
         first = true;
     }

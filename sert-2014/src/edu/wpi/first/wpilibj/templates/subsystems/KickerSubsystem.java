@@ -30,15 +30,11 @@ public class KickerSubsystem extends Subsystem {
     public void raiseKicker() {
         isUp = true;
         kicker.set(DoubleSolenoid.Value.kForward);
-        Timer.delay(.01);
-        resetKickerSolenoid();
     }
     
     public void lowerKicker() {
         isUp = false;
         kicker.set(DoubleSolenoid.Value.kReverse);
-        Timer.delay(.01);
-        resetKickerSolenoid();
     }
     
     public void resetKickerSolenoid() {

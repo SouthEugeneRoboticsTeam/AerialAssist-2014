@@ -94,4 +94,9 @@ public class CANRobotDrive extends RobotDrive {
     public double getOutputVoltage() throws CANTimeoutException {
         return (m_frontLeftMotor.getOutputVoltage() + m_frontRightMotor.getOutputVoltage())/2;
     }
+    
+    public void setVoltageRampRate(double rampRate) throws CANTimeoutException {
+        m_frontLeftMotor.setVoltageRampRate(rampRate);
+        m_frontRightMotor.setVoltageRampRate(rampRate);
+    }
 }
