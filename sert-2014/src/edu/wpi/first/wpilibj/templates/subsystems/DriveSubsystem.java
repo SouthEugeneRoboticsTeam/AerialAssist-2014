@@ -27,6 +27,7 @@ public class DriveSubsystem extends Subsystem {
             CANJaguarMaster left = new CANJaguarMaster(RobotMap.LEFT_FRONT_DRIVE_JAG, left_rear);
             CANJaguarMaster right = new CANJaguarMaster(RobotMap.RIGHT_FRONT_DRIVE_JAG, right_rear);
             drive = new CANRobotDrive(left, right);
+            drive.changeControlMode(CANJaguar.ControlMode.kPercentVbus);
         } catch (CANTimeoutException ex) {
             ex.printStackTrace();
         }

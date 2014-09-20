@@ -35,7 +35,7 @@ public class MoveToDistance extends CommandBase {
             first = false;
         } 
         
-            driveSub.moveToPosition(position);
+        driveSub.moveToPosition(position);
     }
 
     // Make this return true when this Command no longer needs to run execute()

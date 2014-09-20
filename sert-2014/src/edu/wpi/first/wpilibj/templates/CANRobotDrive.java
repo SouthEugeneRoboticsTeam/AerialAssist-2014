@@ -32,7 +32,6 @@ public class CANRobotDrive extends RobotDrive {
     //changes the Jaguar's control mode
     public void changeControlMode(CANJaguar.ControlMode mode) throws CANTimeoutException {
         m_frontLeftMotor.changeControlMode(mode);
-     
         m_frontRightMotor.changeControlMode(mode);
 
     }
