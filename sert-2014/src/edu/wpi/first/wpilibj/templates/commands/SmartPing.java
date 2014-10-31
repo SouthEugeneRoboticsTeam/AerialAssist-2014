@@ -5,24 +5,27 @@
  */
 package edu.wpi.first.wpilibj.templates.commands;
 
+import edu.wpi.first.wpilibj.networktables.NetworkTable;
+
 /**
  *
- * @author FIRST
+ * @author SERT
  */
-public class TeleoperatedDrive extends CommandBase {
-    
-    public TeleoperatedDrive() {
-        requires(driveSub);
-        requires(sensors);
+public class SmartPing extends CommandBase {
+    NetworkTable table;
+    public SmartPing() {
+        // Use requires() here to declare subsystem dependencies
+        // eg. requires(chassis);
     }
 
     // Called just before this Command runs the first time
     protected void initialize() {
+        table = NetworkTable.getTable("SDash");
     }
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-        driveSub.teleoperatedDrive();
+        table.putNumber("o", table.getNumber("o")+1);
     }
 
     // Make this return true when this Command no longer needs to run execute()

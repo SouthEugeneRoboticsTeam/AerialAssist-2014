@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project-private xmlns="http://www.netbeans.org/ns/project-private/1">
+    <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
+    <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
+        <group>
+            <file>file:/C:/Users/SERT/Documents/NetBeansProjects/sert-2014/sert-2014/src/edu/wpi/first/wpilibj/templates/subsystems/IntakeSubsystem.java</file>
+            <file>file:/C:/Users/SERT/Documents/NetBeansProjects/sert-2014/sert-2014/src/edu/wpi/first/wpilibj/templates/OI.java</file>
+            <file>file:/C:/Users/SERT/Documents/NetBeansProjects/sert-2014/sert-2014/src/edu/wpi/first/wpilibj/templates/subsystems/DriveSubsystem.java</file>
+            <file>file:/C:/Users/SERT/Documents/NetBeansProjects/sert-2014/sert-2014/src/edu/wpi/first/wpilibj/templates/RobotMap.java</file>
+            <file>file:/C:/Users/SERT/Documents/NetBeansProjects/sert-2014/sert-2014/src/edu/wpi/first/wpilibj/templates/commands/MoveToPosition.java</file>
+            <file>file:/C:/Users/SERT/Documents/NetBeansProjects/sert-2014/sert-2014/src/edu/wpi/first/wpilibj/templates/commands/MoveToDistance.java</file>
+            <file>file:/C:/Users/SERT/Documents/NetBeansProjects/sert-2014/sert-2014/src/edu/wpi/first/wpilibj/templates/CANRobotDrive.java</file>
+            <file>file:/C:/Users/SERT/Documents/NetBeansProjects/sert-2014/sert-2014/src/edu/wpi/first/wpilibj/templates/subsystems/SensorSubsystem.java</file>
+            <file>file:/C:/Users/SERT/Documents/NetBeansProjects/sert-2014/sert-2014/src/edu/wpi/first/wpilibj/templates/commands/MoveToGoal.java</file>
+            <file>file:/C:/Users/SERT/Documents/NetBeansProjects/sert-2014/sert-2014/src/edu/wpi/first/wpilibj/templates/commands/Pressurize.java</file>
+            <file>file:/C:/Users/SERT/Documents/NetBeansProjects/sert-2014/sert-2014/src/edu/wpi/first/wpilibj/templates/subsystems/CompressorSubsystem.java</file>
+        </group>
+    </open-files>
+</project-private>

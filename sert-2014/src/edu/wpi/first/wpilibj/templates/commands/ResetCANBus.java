@@ -5,15 +5,18 @@
  */
 package edu.wpi.first.wpilibj.templates.commands;
 
+import edu.wpi.first.wpilibj.can.CANTimeoutException;
+
 /**
  *
- * @author FIRST
+ * @author SERT
  */
-public class TeleoperatedDrive extends CommandBase {
+public class ResetCANBus extends CommandBase {
     
-    public TeleoperatedDrive() {
+    public ResetCANBus() {
+        // Use requires() here to declare subsystem dependencies
+        // eg. requires(chassis);
         requires(driveSub);
-        requires(sensors);
     }
 
     // Called just before this Command runs the first time
@@ -22,17 +25,22 @@ public class TeleoperatedDrive extends CommandBase {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-        driveSub.teleoperatedDrive();
     }
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-        return false;
+        return true;
     }
 
     // Called once after isFinished returns true
     protected void end() {
+        try {
+            driveSub.resetCANBus();
+        } catch (CANTimeoutException ex) {
+//            ex.printStackTrace();
+        }
     }
+    
 
     // Called when another command which requires one or more of the same
     // subsystems is scheduled to run

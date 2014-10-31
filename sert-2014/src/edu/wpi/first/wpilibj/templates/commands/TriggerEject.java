@@ -5,35 +5,44 @@
  */
 package edu.wpi.first.wpilibj.templates.commands;
 
+import edu.wpi.first.wpilibj.Timer;
+import edu.wpi.first.wpilibj.can.CANTimeoutException;
+
 /**
  *
  * @author SERT
  */
-public class Pressurize extends CommandBase {
+public class TriggerEject extends CommandBase {
+    boolean first = true;
     
-    int compressorChannel;
-    
-    public Pressurize(int compressorChannel) {
+    public TriggerEject() {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
-        requires(compressor);
-        this.compressorChannel = compressorChannel;
+        requires(intakeSub);
+        requires(kickerSub);
     }
 
     // Called just before this Command runs the first time
     protected void initialize() {
-       
     }
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-        switch (compressorChannel) {
-            case 1:
-                compressor.startOnboardCompressor();
-                break;
-            case 2:
-                compressor.startOffboardCompressor();
-                break;
+        if (first) {
+            if(intakeSub.isUp()) {
+                intakeSub.lowerArm();
+            }
+            
+            first = false;
+        }
+            if (!kickerSub.isUp()) {
+                kickerSub.raiseKicker();
+            }
+        
+        try {
+            intakeSub.intakeControl(.75);
+        } catch (CANTimeoutException ex) {
+//            ex.printStackTrace();
         }
     }
 
@@ -44,11 +53,20 @@ public class Pressurize extends CommandBase {
 
     // Called once after isFinished returns true
     protected void end() {
-        compressor.stopOffboardCompressor();
+        first = true;
+        kickerSub.lowerKicker();
+        try {
+            intakeSub.stopIntake();
+        } catch (CANTimeoutException ex) {
+//            ex.printStackTrace();
+        }
+        
+        
     }
 
     // Called when another command which requires one or more of the same
     // subsystems is scheduled to run
     protected void interrupted() {
+        end();
     }
 }

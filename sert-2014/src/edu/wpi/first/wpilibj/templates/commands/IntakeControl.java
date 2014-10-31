@@ -5,15 +5,19 @@
  */
 package edu.wpi.first.wpilibj.templates.commands;
 
+import edu.wpi.first.wpilibj.can.CANTimeoutException;
+import edu.wpi.first.wpilibj.templates.OI;
+
 /**
  *
- * @author FIRST
+ * @author Aubrey
  */
-public class TeleoperatedDrive extends CommandBase {
+public class IntakeControl extends CommandBase {
     
-    public TeleoperatedDrive() {
-        requires(driveSub);
-        requires(sensors);
+    public IntakeControl() {
+        // Use requires() here to declare subsystem dependencies
+        // eg. requires(chassis);
+        requires(intakeSub);
     }
 
     // Called just before this Command runs the first time
@@ -22,7 +26,13 @@ public class TeleoperatedDrive extends CommandBase {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-        driveSub.teleoperatedDrive();
+        try {
+            //negative to reverse direction of control
+            double speed = -OI.getInstance().getShootStick().getY();    
+            intakeSub.intakeControl(speed);
+        } catch (CANTimeoutException ex) {
+//            ex.printStackTrace();
+        }
     }
 
     // Make this return true when this Command no longer needs to run execute()
@@ -32,10 +42,16 @@ public class TeleoperatedDrive extends CommandBase {
 
     // Called once after isFinished returns true
     protected void end() {
+        try {
+            intakeSub.stopIntake();
+        } catch (CANTimeoutException ex) {
+//            ex.printStackTrace();
+        }
     }
 
     // Called when another command which requires one or more of the same
     // subsystems is scheduled to run
     protected void interrupted() {
+        end();
     }
 }

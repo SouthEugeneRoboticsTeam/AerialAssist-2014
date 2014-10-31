@@ -1,11 +1,19 @@
-
 package edu.wpi.first.wpilibj.templates;
 
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.buttons.Button;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
 import edu.wpi.first.wpilibj.templates.commands.ChangeDriveMode;
+import edu.wpi.first.wpilibj.templates.commands.ChangeArmPosition;
+import edu.wpi.first.wpilibj.templates.commands.ChangeKickerPosition;
+import edu.wpi.first.wpilibj.templates.commands.MoveToDistance;
+import edu.wpi.first.wpilibj.templates.commands.PrintDistance;
+import edu.wpi.first.wpilibj.templates.commands.ResetAutonomous;
+import edu.wpi.first.wpilibj.templates.commands.ResetCANBus;
+import edu.wpi.first.wpilibj.templates.commands.Score;
 import edu.wpi.first.wpilibj.templates.commands.SlowDrive;
+import edu.wpi.first.wpilibj.templates.commands.TriggerEject;
+import edu.wpi.first.wpilibj.templates.commands.TriggerIntake;
 
 /**
  * This class is the glue that binds the controls on the physical operator
@@ -46,16 +54,33 @@ public class OI {
     
     Joystick leftDriveStick;
     Joystick rightDriveStick;
+    Joystick shootStick;
     
     Button leftChangeDriveMode;
     Button rightChangeDriveMode;
+    Button rotationForward;
+    Button rotationReverse;
     Button slowMode;
+    Button shooterChangeArmPostion;
+    Button shooterChangeKickerPosition;
+    Button driverChangeArmPostion;
+    Button driverChangeKickerPosition;
+    Button offboardCompressor;
+    Button intake;
+    Button eject;
+    Button score;
+    Button autonomousReset;
+    Button printDistance;
+    Button updateSFX;
+    Button moveForward;
+    Button resetCANBus;
             
     public static OI instance;
     
     public OI() {
         leftDriveStick = new Joystick(RobotMap.LEFT_DRIVE_STICK_PORT);
         rightDriveStick = new Joystick(RobotMap.RIGHT_DRIVE_STICK_PORT);
+        shootStick = new Joystick(RobotMap.SHOOT_STICK_PORT);
         initButtons();
     }
     
@@ -68,16 +93,47 @@ public class OI {
     }
     
     private void initButtons() {
-        leftChangeDriveMode = new JoystickButton(leftDriveStick, 1);
-        rightChangeDriveMode = new JoystickButton(rightDriveStick, 1);
+        //leftChangeDriveMode = new JoystickButton(leftDriveStick, 6);
+        //rightChangeDriveMode = new JoystickButton(rightDriveStick, 6);
+        rotationForward = new JoystickButton(leftDriveStick, 8);
+        rotationReverse = new JoystickButton(leftDriveStick, 9);
         slowMode = new JoystickButton(leftDriveStick, 7);
+        //shooterChangeArmPostion = new JoystickButton(shootStick, 3);
+        shooterChangeKickerPosition = new JoystickButton(shootStick, 6);
+        //driverChangeArmPostion = new JoystickButton(leftDriveStick, 3);
+        //driverChangeKickerPosition = new JoystickButton(leftDriveStick, 2);
+        intake = new JoystickButton(leftDriveStick, 1);
+        eject = new JoystickButton(shootStick, 1);
+        autonomousReset = new JoystickButton(shootStick, 10);
+        printDistance = new JoystickButton(leftDriveStick, 10);
+        //moveForward = new JoystickButton(leftDriveStick,7);
+        //score = new JoystickButton(leftDriveStick, 5);
+       //offboardCompressor = new JoystickButton(leftDriveStick, 10);
+       //updateSFX = new JoystickButton(shootStick, 10);
+        resetCANBus = new JoystickButton(shootStick, 7);
+        
         tieButtons();
     }
     
     private void tieButtons() {
-        leftChangeDriveMode.whenPressed(new ChangeDriveMode());
-        rightChangeDriveMode.whenPressed(new ChangeDriveMode());
+        //leftChangeDriveMode.whenPressed(new ChangeDriveMode());
+        //rightChangeDriveMode.whenPressed(new ChangeDriveMode());
+        //Change amount each button drives
+        //rotationForward.whenPressed(new MoveToDistance(20));
+        //rotationReverse.whenPressed(new MoveToDistance(-RobotMap.AUTONOMOUS_DISTANCE));
+        //moveForward.whenPressed(new MoveToDistance(181));
         slowMode.whenPressed(new SlowDrive());
+        //shooterChangeArmPostion.whenPressed(new ChangeArmPosition());
+        shooterChangeKickerPosition.whenPressed(new ChangeKickerPosition());
+        //driverChangeArmPostion.whenPressed(new ChangeArmPosition());
+        //driverChangeKickerPosition.whenPressed(new ChangeKickerPosition());
+        intake.whileHeld(new TriggerIntake());
+        eject.whileHeld(new TriggerEject());
+        autonomousReset.whenPressed(new ResetAutonomous());
+        printDistance.whenPressed(new PrintDistance());
+        //score.whenPressed(new Score());
+        //updateSFX.whenPressed(new SmartPing());
+        resetCANBus.whenPressed(new ResetCANBus());
     }
     
     public Joystick getLeftDriveStick() {
@@ -86,6 +142,9 @@ public class OI {
     
     public Joystick getRightDriveStick() {
         return rightDriveStick;
+    }
+    public Joystick getShootStick() {
+        return shootStick;
     }
 }
 

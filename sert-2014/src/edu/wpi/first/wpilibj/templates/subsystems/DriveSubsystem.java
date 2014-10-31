@@ -1,16 +1,13 @@
 
 package edu.wpi.first.wpilibj.templates.subsystems;
 
-import edu.wpi.first.wpilibj.CANJaguar;
-import edu.wpi.first.wpilibj.DriverStationEnhancedIO;
-import edu.wpi.first.wpilibj.DriverStationLCD;
+import edu.wpi.first.wpilibj.templates.CANJaguar;
 import edu.wpi.first.wpilibj.can.CANTimeoutException;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.templates.CANJaguarMaster;
 import edu.wpi.first.wpilibj.templates.CANRobotDrive;
 import edu.wpi.first.wpilibj.templates.OI;
 import edu.wpi.first.wpilibj.templates.RobotMap;
-import edu.wpi.first.wpilibj.templates.commands.SlowDrive;
 import edu.wpi.first.wpilibj.templates.commands.TeleoperatedDrive;
 
 /**
@@ -18,58 +15,120 @@ import edu.wpi.first.wpilibj.templates.commands.TeleoperatedDrive;
  */
 public class DriveSubsystem extends Subsystem {
     CANRobotDrive drive;
+    CANJaguarMaster rightSide;
     private boolean isArcade = true;
     private boolean slowMode = false;
     
     public DriveSubsystem() {
         try{
-           drive = new CANRobotDrive(new CANJaguarMaster(RobotMap.LEFT_FRONT_DRIVE_JAG, new CANJaguar(RobotMap.LEFT_REAR_DRIVE_JAG)), new CANJaguarMaster(RobotMap.RIGHT_FRONT_DRIVE_JAG, new CANJaguar(RobotMap.RIGHT_REAR_JAG_DRIVE)));
-        } catch (Exception ex) {
-             ex.printStackTrace();
+            CANJaguar right_rear = new CANJaguar(RobotMap.RIGHT_REAR_DRIVE_JAG, CANJaguar.ControlMode.kVoltage);
+            CANJaguar left_rear = new CANJaguar(RobotMap.LEFT_REAR_DRIVE_JAG, CANJaguar.ControlMode.kVoltage);
+            
+            CANJaguarMaster left = new CANJaguarMaster(RobotMap.LEFT_FRONT_DRIVE_JAG, left_rear);
+            CANJaguarMaster right = new CANJaguarMaster(RobotMap.RIGHT_FRONT_DRIVE_JAG, right_rear);
+            drive = new CANRobotDrive(left, right);
+            drive.changeControlMode(CANJaguar.ControlMode.kPercentVbus);
+        } catch (CANTimeoutException ex) {
+            ex.printStackTrace();
         }
+
     }
 
+    public void resetCANBus() throws CANTimeoutException {
+        drive.changeControlMode(CANJaguar.ControlMode.kPosition);
+        drive.configEncoderCodesPerRev(360); 
+        drive.setPositionReference(CANJaguar.PositionReference.kQuadEncoder);
+        drive.setPID(RobotMap.K_P, RobotMap.K_I, RobotMap.K_D);
+        drive.changeControlMode(CANJaguar.ControlMode.kPercentVbus);
+        //drive.setVoltageRampRate(60);
+    }
+    
     public void teleoperatedDrive() {
         if (isArcade) {
             arcade();
         } else {
             tank();
         }
-        printEncoders();
     }
     
     public void changeControlMode(CANJaguar.ControlMode mode) {
         try {
             drive.changeControlMode(mode);
         } catch (CANTimeoutException ex) {
-            ex.printStackTrace();
+//            ex.printStackTrace();
+            ex.getMessage();
         }
     }
     
-    public void moveDistance(double inches) {
+    public void moveToPosition(double position) {
         try {
-            drive.moveInches(inches);
+            // System.out.println("DIRVESUB movetoPostion: " + position);
+            drive.moveToPosition(position);
         } catch (CANTimeoutException ex) {
-            ex.printStackTrace();
+            ex.printStackTrace();       
+        }
+        
+    }
+    public void setX(double value) {
+        try {
+            // System.out.println("DIRVESUB movetoPostion: " + position);
+            drive.setX(value);
+        } catch (CANTimeoutException ex) {
+            ex.printStackTrace();       
+        }
+        
+    }
+    
+    
+    public void enableControl() {
+        try {
+            drive.enableControl();
+        } catch (CANTimeoutException ex) {
+//            ex.printStackTrace();
         }
     }
     
-    public void printEncoders() {
+    public void enableControl(double position) {
         try {
-            DriverStationLCD.getInstance().println(DriverStationLCD.Line.kUser1, 1, String.valueOf(drive.getEncoders()));
-            DriverStationLCD.getInstance().updateLCD();
+            drive.enableControl(position);
         } catch (CANTimeoutException ex) {
-            ex.printStackTrace();
+//            ex.printStackTrace();
         }
+    }
+    
+    public void disableControl() {
+        try {
+            drive.disableControl();
+        } catch (CANTimeoutException ex) {
+//            ex.printStackTrace();
+        }
+    }
+    
+    public double getPosition() {
+        try {
+            return drive.getPosition();
+        } catch (CANTimeoutException ex) {
+//            ex.printStackTrace();
+        }
+        return 0;
     }
 
     public void changeTeleoperatedDriveMode() {
         isArcade = !isArcade;
     }
+    
+    public double getOutputVoltage() {
+        try {
+            return drive.getOutputVoltage();
+        } catch (CANTimeoutException ex) {
+//            ex.printStackTrace();
+        }
+        return 0;
+    }
    
     private void arcade(){
         if (slowMode) {
-            drive.arcadeDrive(-OI.getInstance().getLeftDriveStick().getY()*.3, -OI.getInstance().getLeftDriveStick().getX()*.3, true);
+            drive.arcadeDrive(-OI.getInstance().getLeftDriveStick().getY()*.6, -OI.getInstance().getLeftDriveStick().getX()*.6, true);
         } else {
             drive.arcadeDrive(-OI.getInstance().getLeftDriveStick().getY(), -OI.getInstance().getLeftDriveStick().getX(), true);
         }
@@ -84,11 +143,15 @@ public class DriveSubsystem extends Subsystem {
     }
     
     public void slowMode() {
-        slowMode = true;
+        slowMode = !slowMode;
     }
     
     public void initDefaultCommand() {
-        setDefaultCommand(new TeleoperatedDrive());
+       setDefaultCommand(new TeleoperatedDrive());
+    }
+
+    public double getRightPosition() throws CANTimeoutException {
+        return drive.getRightPosition();
     }
 
 }

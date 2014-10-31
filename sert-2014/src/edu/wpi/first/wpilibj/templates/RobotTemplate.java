@@ -9,9 +9,14 @@ package edu.wpi.first.wpilibj.templates;
 
 
 import edu.wpi.first.wpilibj.IterativeRobot;
-import edu.wpi.first.wpilibj.command.Command;
+import edu.wpi.first.wpilibj.Timer;
+import edu.wpi.first.wpilibj.command.CommandGroup;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
+import edu.wpi.first.wpilibj.networktables.NetworkTable;
+import edu.wpi.first.wpilibj.templates.commands.Autonomous;
+import edu.wpi.first.wpilibj.templates.commands.AutonomousDouble;
+import edu.wpi.first.wpilibj.templates.commands.AutonomousHotSecond;
 import edu.wpi.first.wpilibj.templates.commands.CommandBase;
 
 /**
@@ -22,31 +27,55 @@ import edu.wpi.first.wpilibj.templates.commands.CommandBase;
  * directory.
  */
 public class RobotTemplate extends IterativeRobot {
+    NetworkTable table;
+    CommandGroup autonomous;
+    CommandGroup autonomousHotSecond;
 
+    boolean targeted;
+    double autoStartTime;
 
     /**
      * This function is run when the robot is first started up and should be
      * used for any initialization code.
      */
     public void robotInit() {
-        // instantiate the command used for the autonomous period
-
+        
+        
         // Initialize all subsystems
-        try {
-            CommandBase.init();
-        } catch (Exception ex) {
-                ex.printStackTrace();
-        }
+        table = NetworkTable.getTable("SDash");
+        CommandBase.init(table);
+        
+        autonomous = new Autonomous();
     }
 
     public void autonomousInit() {
-        // schedule the autonomous command (example)
+        targeted = false;
+        autoStartTime = Timer.getFPGATimestamp();
     }
 
     /**
      * This function is called periodically during autonomous
      */
     public void autonomousPeriodic() {
+        int blobCount = (int) table.getNumber("BLOB_COUNT", 1);
+        
+        if ((autoStartTime + 4) < Timer.getFPGATimestamp()) {
+            blobCount = 2;
+        }
+        
+        if (!targeted && (autoStartTime + 1 < Timer.getFPGATimestamp())) {
+            switch (blobCount) {
+                case 1:
+                    break;
+                default:
+                    targeted = true;
+                    autonomous.start();
+                    break;
+            }
+        }
+        
+        
+        
         Scheduler.getInstance().run();
     }
 
@@ -55,17 +84,16 @@ public class RobotTemplate extends IterativeRobot {
         // teleop starts running. If you want the autonomous to 
         // continue until interrupted by another command, remove
         // this line or comment it out.
+        autonomous.cancel();
+        
     }
 
     /**
      * This function is called periodically during operator control
      */
     public void teleopPeriodic() {
-        try {
+        
         Scheduler.getInstance().run();
-        } catch (Exception ex) {
-            ex.printStackTrace();
-        }
     }
     
     /**
