@@ -62,12 +62,23 @@ public class DriveSubsystem extends Subsystem {
     
     public void moveToPosition(double position) {
         try {
+            // System.out.println("DIRVESUB movetoPostion: " + position);
             drive.moveToPosition(position);
         } catch (CANTimeoutException ex) {
-//            ex.printStackTrace();
+            ex.printStackTrace();       
         }
         
     }
+    public void setX(double value) {
+        try {
+            // System.out.println("DIRVESUB movetoPostion: " + position);
+            drive.setX(value);
+        } catch (CANTimeoutException ex) {
+            ex.printStackTrace();       
+        }
+        
+    }
+    
     
     public void enableControl() {
         try {

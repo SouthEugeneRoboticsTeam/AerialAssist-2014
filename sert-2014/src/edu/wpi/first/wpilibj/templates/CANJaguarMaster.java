@@ -34,10 +34,12 @@ public class CANJaguarMaster extends CANJaguar {
     //The slave copies by fetching the output voltage from the faster and setting that as its output
     
     public void setX(double outputValue) {
+        System.out.println("Master:setX: " + outputValue);
         setX(outputValue, (byte) 0);
     }
     
     public void set(double outputValue) {
+        System.out.println("Master:set1: " + outputValue);
         setX(outputValue, (byte) 0);
     }
     
@@ -63,6 +65,7 @@ public class CANJaguarMaster extends CANJaguar {
                 }
             } else {
                super.setX(outputValue, syncGroup);
+               System.out.println("Master:SetXimpl: " + outputValue + "votls: " + super.getOutputVoltage());
                m_slave.setX(super.getOutputVoltage(), syncGroup);
                 
             }
@@ -73,6 +76,7 @@ public class CANJaguarMaster extends CANJaguar {
     }
     
     public void set(double outputValue, byte syncGroup) {
+        System.out.println("Master:set: " + outputValue);
         setX(outputValue, syncGroup);
     }
     

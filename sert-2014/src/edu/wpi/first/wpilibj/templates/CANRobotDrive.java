@@ -42,6 +42,12 @@ public class CANRobotDrive extends RobotDrive {
         m_frontRightMotor.setX(-position);
         if (m_safetyHelper != null) m_safetyHelper.feed();
     }
+     //moves the drivetrain to the given postion
+    public void setX(double value) throws CANTimeoutException {
+        m_frontLeftMotor.setX(value);
+        m_frontRightMotor.setX(-value);
+        if (m_safetyHelper != null) m_safetyHelper.feed();
+    }
     
     //returns the value of the position reference
     public double getPosition() throws CANTimeoutException {

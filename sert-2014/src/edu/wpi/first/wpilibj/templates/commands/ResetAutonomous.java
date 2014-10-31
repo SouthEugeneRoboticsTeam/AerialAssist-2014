@@ -16,6 +16,7 @@ public class ResetAutonomous extends CommandBase {
     public ResetAutonomous() {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
+        requires(driveSub);
         requires(kickerSub);
         requires(intakeSub);
     }

@@ -284,6 +284,7 @@ public class CANJaguar implements MotorSafety, PIDOutput, SpeedController, LiveW
     public CANJaguar(int deviceNumber) throws CANTimeoutException {
         m_deviceNumber = (byte) deviceNumber;
         m_controlMode = ControlMode.kPercentVbus;
+        System.out.println("CanJaguar: " + deviceNumber);
         m_maxOutputVoltage = kApproxBusVoltage;
         initCANJaguar();
     }
@@ -295,6 +296,7 @@ public class CANJaguar implements MotorSafety, PIDOutput, SpeedController, LiveW
      */
     public CANJaguar(int deviceNumber, ControlMode controlMode) throws CANTimeoutException {
         m_deviceNumber = (byte) deviceNumber;
+        System.out.println("CanJaguar: " + deviceNumber + " mode: " + controlMode);
         m_controlMode = controlMode;
         m_maxOutputVoltage = kApproxBusVoltage;
         initCANJaguar();
@@ -345,13 +347,16 @@ public class CANJaguar implements MotorSafety, PIDOutput, SpeedController, LiveW
         int messageID = 0;
         byte[] dataBuffer = new byte[8];
         byte dataSize = 0;
+        // System.out.println("setX( " + m_deviceNumber + " ): " + outputValue);
 
         if (!m_safetyHelper.isAlive()) {
+            //System.out.println("isAlive");
             enableControl();
         }
-
+        
         switch (m_controlMode.value) {
             case ControlMode.kPercentVbus_val:
+                System.out.println("PercentVbus to ( " + m_deviceNumber + " ): " + outputValue);
                 messageID = JaguarCANProtocol.LM_API_VOLT_T_SET;
                 if (outputValue > 1.0) outputValue = 1.0;
                 if (outputValue < -1.0) outputValue = -1.0;
@@ -364,6 +369,7 @@ public class CANJaguar implements MotorSafety, PIDOutput, SpeedController, LiveW
             }
             break;
             case ControlMode.kPosition_val: {
+                System.out.println("Postion to ( " + m_deviceNumber + " ): " + outputValue);
                 messageID = JaguarCANProtocol.LM_API_POS_T_SET;
                 dataSize = packFXP16_16(dataBuffer, outputValue);
             }
@@ -374,6 +380,7 @@ public class CANJaguar implements MotorSafety, PIDOutput, SpeedController, LiveW
             }
             break;
             case ControlMode.kVoltage_val: {
+                System.out.println("Voltage to ( " + m_deviceNumber + " ): " + outputValue);
                 messageID = JaguarCANProtocol.LM_API_VCOMP_T_SET;
                 dataSize = packFXP8_8(dataBuffer, outputValue);
             }
@@ -947,12 +954,14 @@ public class CANJaguar implements MotorSafety, PIDOutput, SpeedController, LiveW
 
         switch (m_controlMode.value) {
             case ControlMode.kPercentVbus_val:
+                System.out.println("enable(" + m_deviceNumber + "): PercentVbus");
                 setTransaction(JaguarCANProtocol.LM_API_VOLT_T_EN, dataBuffer, dataSize);
                 break;
             case ControlMode.kSpeed_val:
                 setTransaction(JaguarCANProtocol.LM_API_SPD_T_EN, dataBuffer, dataSize);
                 break;
             case ControlMode.kPosition_val:
+                System.out.println("enable(" + m_deviceNumber + "): Position");
                 dataSize = packFXP16_16(dataBuffer, encoderInitialPosition);
                 setTransaction(JaguarCANProtocol.LM_API_POS_T_EN, dataBuffer, dataSize);
                 break;
@@ -960,6 +969,7 @@ public class CANJaguar implements MotorSafety, PIDOutput, SpeedController, LiveW
                 setTransaction(JaguarCANProtocol.LM_API_ICTRL_T_EN, dataBuffer, dataSize);
                 break;
             case ControlMode.kVoltage_val:
+                System.out.println("enable(" + m_deviceNumber + "): Voltage");
                 setTransaction(JaguarCANProtocol.LM_API_VCOMP_T_EN, dataBuffer, dataSize);
                 break;
         }
@@ -976,18 +986,21 @@ public class CANJaguar implements MotorSafety, PIDOutput, SpeedController, LiveW
 
         switch (m_controlMode.value) {
             case ControlMode.kPercentVbus_val:
+                System.out.println("disable(" + m_deviceNumber + "): PercentVbus");
                 setTransaction(JaguarCANProtocol.LM_API_VOLT_DIS, dataBuffer, dataSize);
                 break;
             case ControlMode.kSpeed_val:
                 setTransaction(JaguarCANProtocol.LM_API_SPD_DIS, dataBuffer, dataSize);
                 break;
             case ControlMode.kPosition_val:
+                System.out.println("disable(" + m_deviceNumber + "): Position");
                 setTransaction(JaguarCANProtocol.LM_API_POS_DIS, dataBuffer, dataSize);
                 break;
             case ControlMode.kCurrent_val:
                 setTransaction(JaguarCANProtocol.LM_API_ICTRL_DIS, dataBuffer, dataSize);
                 break;
             case ControlMode.kVoltage_val:
+                System.out.println("disable(" + m_deviceNumber + "): Voltage");
                 setTransaction(JaguarCANProtocol.LM_API_VCOMP_DIS, dataBuffer, dataSize);
                 break;
         }
@@ -1008,7 +1021,7 @@ public class CANJaguar implements MotorSafety, PIDOutput, SpeedController, LiveW
         // Update the local mode
         m_controlMode = controlMode;
 
-                UsageReporting.report(UsageReporting.kResourceType_CANJaguar, m_deviceNumber, m_controlMode.value);
+        UsageReporting.report(UsageReporting.kResourceType_CANJaguar, m_deviceNumber, m_controlMode.value);
     }
 
     /**

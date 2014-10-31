@@ -18,6 +18,7 @@ public class MoveToPosition extends CommandBase {
     //moves to the given distance in inches
     public MoveToPosition(double position) {
         requires(driveSub);
+        // System.out.println("MoveToPostion: " + position);
         this.position = position;
     }
 
@@ -27,7 +28,10 @@ public class MoveToPosition extends CommandBase {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
+        //System.out.println("MoveToPostion execute");
         if (first) {
+            // System.out.println("MoveToPostion execute, first");
+
             driveSub.changeControlMode(CANJaguar.ControlMode.kPosition);
             driveSub.enableControl();
             first = false;
@@ -38,11 +42,15 @@ public class MoveToPosition extends CommandBase {
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
+        //System.out.println("IsFinished");
+
         return (Math.abs(driveSub.getPosition() - position)) < .1;
     }
 
     // Called once after isFinished returns true
     protected void end() {
+                System.out.println("MoveToPostion END");
+
         driveSub.disableControl();
         driveSub.changeControlMode(CANJaguar.ControlMode.kPercentVbus);
         first = true;
