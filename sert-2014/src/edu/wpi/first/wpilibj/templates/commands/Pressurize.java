@@ -45,6 +45,10 @@ public class Pressurize extends CommandBase {
     // Called once after isFinished returns true
     protected void end() {
         compressor.stopOffboardCompressor();
+        
+        // I wonder if it is an oversight to not stop the onboard compressor
+        // should we:
+        //compressor.stopOnboardCompressor();
     }
 
     // Called when another command which requires one or more of the same
